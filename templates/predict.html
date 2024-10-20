@@ -4,75 +4,239 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Parkinson's Disease Prediction</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f9f9f9;
-        }
-        h2 {
-            color: #333;
-        }
-        label {
-            display: block;
-            margin: 10px 0 5px;
-        }
-        input {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        button {
-            padding: 10px 15px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        .result {
-            margin-top: 20px;
-            font-size: 1.2em;
-            color: #333;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <h2>Parkinson's Disease Prediction</h2>
-    <form action="/predict" method="POST">
-        <label>MDVP:Fo(Hz): <input type="number" step="any" name="MDVP_Fo" required></label>
-        <label>MDVP:Fhi(Hz): <input type="number" step="any" name="MDVP_Fhi" required></label>
-        <label>MDVP:Flo(Hz): <input type="number" step="any" name="MDVP_Flo" required></label>
-        <label>MDVP:Jitter(%): <input type="number" step="any" name="MDVP_Jitter" required></label>
-        <label>MDVP:Jitter(Abs): <input type="number" step="any" name="MDVP_Jitter_Abs" required></label>
-        <label>MDVP:RAP: <input type="number" step="any" name="MDVP_RAP" required></label>
-        <label>MDVP:PPQ: <input type="number" step="any" name="MDVP_PPQ" required></label>
-        <label>Jitter:DDP: <input type="number" step="any" name="Jitter_DDP" required></label>
-        <label>MDVP:Shimmer: <input type="number" step="any" name="MDVP_Shimmer" required></label>
-        <label>MDVP:Shimmer(dB): <input type="number" step="any" name="MDVP_Shimmer_dB" required></label>
-        <label>Shimmer:APQ3: <input type="number" step="any" name="Shimmer_APQ3" required></label>
-        <label>Shimmer:APQ5: <input type="number" step="any" name="Shimmer_APQ5" required></label>
-        <label>MDVP:APQ: <input type="number" step="any" name="MDVP_APQ" required></label>
-        <label>Shimmer:DDA: <input type="number" step="any" name="Shimmer_DDA" required></label>
-        <label>NHR: <input type="number" step="any" name="NHR" required></label>
-        <label>HNR: <input type="number" step="any" name="HNR" required></label>
-        <label>RPDE: <input type="number" step="any" name="RPDE" required></label>
-        <label>DFA: <input type="number" step="any" name="DFA" required></label>
-        <label>spread1: <input type="number" step="any" name="spread1" required></label>
-        <label>spread2: <input type="number" step="any" name="spread2" required></label>
-        <label>D2: <input type="number" step="any" name="D2" required></label>
-        <label>PPE: <input type="number" step="any" name="PPE" required></label>
-        <button type="submit">Predict</button>
-    </form>
-
-    {% if prediction %}
-    <div class="result">Prediction: {{ prediction }}</div>
-    {% endif %}
+    <div class="container">
+        <h2>Parkinson's Disease Prediction</h2>
+        <form action="/predict" method="POST" class="form-grid">
+            <div class="form-group">
+                <label>
+                    <span class="info-container">
+                        <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info" class="info-icon">
+                        <span class="tooltip">MDVP:Fo(Hz) description.</span>
+                    </span>
+                    MDVP:Fo(Hz):
+                    <input type="number" step="any" name="MDVP_Fo" placeholder="00.000" required>
+                </label>
+            </div>
+            <div class="form-group">
+                <label>
+                    <span class="info-container">
+                        <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info" class="info-icon">
+                        <span class="tooltip">MDVP:Fhi(Hz) description.</span>
+                    </span>
+                    MDVP:Fhi(Hz):
+                    <input type="number" step="any" name="MDVP_Fhi" placeholder="00.000" required>
+                </label>
+            </div>
+            <div class="form-group">
+                <label>
+                    <span class="info-container">
+                        <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info" class="info-icon">
+                        <span class="tooltip">MDVP:Flo(Hz) description.</span>
+                    </span>
+                    MDVP:Flo(Hz):
+                    <input type="number" step="any" name="MDVP_Flo" placeholder="00.000" required>
+                </label>
+            </div>
+            <div class="form-group">
+                <label>
+                    <span class="info-container">
+                        <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info" class="info-icon">
+                        <span class="tooltip">MDVP:Jitter(%) description.</span>
+                    </span>
+                    MDVP:Jitter(%):
+                    <input type="number" step="any" name="MDVP_Jitter" placeholder="00.000" required>
+                </label>
+            </div>
+            <div class="form-group">
+                <label>
+                    <span class="info-container">
+                        <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info" class="info-icon">
+                        <span class="tooltip">MDVP:Jitter(Abs) description.</span>
+                    </span>
+                    MDVP:Jitter(Abs):
+                    <input type="number" step="any" name="MDVP_Jitter_Abs" placeholder="00.000" required>
+                </label>
+            </div>
+            <div class="form-group">
+                <label>
+                    <span class="info-container">
+                        <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info" class="info-icon">
+                        <span class="tooltip">MDVP:RAP description.</span>
+                    </span>
+                    MDVP:RAP:
+                    <input type="number" step="any" name="MDVP_RAP" placeholder="00.000" required>
+                </label>
+            </div>
+            <div class="form-group">
+                <label>
+                    <span class="info-container">
+                        <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info" class="info-icon">
+                        <span class="tooltip">MDVP:PPQ description.</span>
+                    </span>
+                    MDVP:PPQ:
+                    <input type="number" step="any" name="MDVP_PPQ" placeholder="00.000" required>
+                </label>
+            </div>
+            <div class="form-group">
+                <label>
+                    <span class="info-container">
+                        <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info" class="info-icon">
+                        <span class="tooltip">Jitter:DDP description.</span>
+                    </span>
+                    Jitter:DDP:
+                    <input type="number" step="any" name="Jitter_DDP" placeholder="00.000" required>
+                </label>
+            </div>
+            <div class="form-group">
+                <label>
+                    <span class="info-container">
+                        <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info" class="info-icon">
+                        <span class="tooltip">MDVP:Shimmer description.</span>
+                    </span>
+                    MDVP:Shimmer:
+                    <input type="number" step="any" name="MDVP_Shimmer" placeholder="00.000" required>
+                </label>
+            </div>
+            <div class="form-group">
+                <label>
+                    <span class="info-container">
+                        <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info" class="info-icon">
+                        <span class="tooltip">MDVP:Shimmer(dB) description.</span>
+                    </span>
+                    MDVP:Shimmer(dB):
+                    <input type="number" step="any" name="MDVP_Shimmer_dB" placeholder="00.000" required>
+                </label>
+            </div>
+            <div class="form-group">
+                <label>
+                    <span class="info-container">
+                        <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info" class="info-icon">
+                        <span class="tooltip">Shimmer:APQ3 description.</span>
+                    </span>
+                    Shimmer:APQ3:
+                    <input type="number" step="any" name="Shimmer_APQ3" placeholder="00.000" required>
+                </label>
+            </div>
+            <div class="form-group">
+                <label>
+                    <span class="info-container">
+                        <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info" class="info-icon">
+                        <span class="tooltip">Shimmer:APQ5 description.</span>
+                    </span>
+                    Shimmer:APQ5:
+                    <input type="number" step="any" name="Shimmer_APQ5" placeholder="00.000" required>
+                </label>
+            </div>
+            <div class="form-group">
+                <label>
+                    <span class="info-container">
+                        <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info" class="info-icon">
+                        <span class="tooltip">MDVP:APQ description.</span>
+                    </span>
+                    MDVP:APQ:
+                    <input type="number" step="any" name="MDVP_APQ" placeholder="00.000" required>
+                </label>
+            </div>
+            <div class="form-group">
+                <label>
+                    <span class="info-container">
+                        <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info" class="info-icon">
+                        <span class="tooltip">Shimmer:DDA description.</span>
+                    </span>
+                    Shimmer:DDA:
+                    <input type="number" step="any" name="Shimmer_DDA" placeholder="00.000" required>
+                </label>
+            </div>
+            <div class="form-group">
+                <label>
+                    <span class="info-container">
+                        <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info" class="info-icon">
+                        <span class="tooltip">NHR description.</span>
+                    </span>
+                    NHR:
+                    <input type="number" step="any" name="NHR" placeholder="00.000" required>
+                </label>
+            </div>
+            <div class="form-group">
+                <label>
+                    <span class="info-container">
+                        <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info" class="info-icon">
+                        <span class="tooltip">HNR description.</span>
+                    </span>
+                    HNR:
+                    <input type="number" step="any" name="HNR" placeholder="00.000" required>
+                </label>
+            </div>
+            <div class="form-group">
+                <label>
+                    <span class="info-container">
+                        <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info" class="info-icon">
+                        <span class="tooltip">RPDE description.</span>
+                    </span>
+                    RPDE:
+                    <input type="number" step="any" name="RPDE" placeholder="00.000" required>
+                </label>
+            </div>
+            <div class="form-group">
+                <label>
+                    <span class="info-container">
+                        <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info" class="info-icon">
+                        <span class="tooltip">DFA description.</span>
+                    </span>
+                    DFA:
+                    <input type="number" step="any" name="DFA" placeholder="00.000" required>
+                </label>
+            </div>
+            <div class="form-group">
+                <label>
+                    <span class="info-container">
+                        <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info" class="info-icon">
+                        <span class="tooltip">spread1 description.</span>
+                    </span>
+                    spread1:
+                    <input type="number" step="any" name="spread1" placeholder="00.000" required>
+                </label>
+            </div>
+            <div class="form-group">
+                <label>
+                    <span class="info-container">
+                        <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info" class="info-icon">
+                        <span class="tooltip">spread2 description.</span>
+                    </span>
+                    spread2:
+                    <input type="number" step="any" name="spread2" placeholder="00.000" required>
+                </label>
+            </div>
+            <div class="form-group">
+                <label>
+                    <span class="info-container">
+                        <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info" class="info-icon">
+                        <span class="tooltip">D2 description.</span>
+                    </span>
+                    D2:
+                    <input type="number" step="any" name="D2" placeholder="00.000" required>
+                </label>
+            </div>
+            <div class="form-group">
+                <label>
+                    <span class="info-container">
+                        <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info" class="info-icon">
+                        <span class="tooltip">PPE description.</span>
+                    </span>
+                    PPE:
+                    <input type="number" step="any" name="PPE" placeholder="00.000" required>
+                </label>
+            </div>
+            <button type="submit" class="submit-btn">Predict</button>
+        </form>
+        {% if prediction %}
+        <div class="result">
+            <h3>{{ prediction }}</h3>
+        </div>
+        {% endif %}
+    </div>
 </body>
 </html>

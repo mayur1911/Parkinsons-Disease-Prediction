@@ -1,0 +1,89 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+}
+
+.form-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.form-group {
+    width: calc(50% - 20px); /* 50% for two columns with space */
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: flex;
+    align-items: center;
+}
+
+.form-group input {
+    margin-left: 10px;
+    width: 100%;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.result {
+    margin-top: 20px;
+    font-size: 18px;
+    text-align: center;
+}
+.info-icon {
+    width: 16px; /* Adjust as needed */
+    height: 16px; /* Adjust as needed */
+    margin-right: 5px; /* Space between the icon and the text */
+    vertical-align: middle; /* Aligns the icon vertically with the text */
+    cursor: pointer;
+}
+.info-container {
+    position: relative; /* Position relative for the tooltip */
+    display: inline-block; /* Allow the tooltip to be positioned */
+}
+
+.tooltip {
+    visibility: hidden; /* Hide tooltip by default */
+    width: 120px; /* Width of the tooltip */
+    background-color: #555; /* Background color of the tooltip */
+    color: #fff; /* Text color */
+    text-align: center; /* Center text */
+    border-radius: 5px; /* Rounded corners */
+    padding: 5px; /* Padding */
+    position: absolute; /* Position tooltip */
+    z-index: 1; /* On top of other elements */
+    bottom: 125%; /* Position above the icon */
+    left: 50%; /* Center the tooltip */
+    margin-left: -60px; /* Adjust to center */
+    opacity: 0; /* Invisible by default */
+    transition: opacity 0.3s; /* Fade in effect */
+}
+
+.info-container:hover .tooltip {
+    visibility: visible; /* Show tooltip on hover */
+    opacity: 1; /* Fade in */
+}
