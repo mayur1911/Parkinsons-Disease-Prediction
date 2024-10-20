@@ -1,0 +1,30 @@
+# Python
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+.Python
+venv/
+env/
+ENV/
+env.bak/
+*.swp
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+pip-wheel-metadata/
+
+# Environment variables
+.env
+
+# VSCode settings
+.vscode/
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# MacOS and Windows files
+.DS_Store
+Thumbs.db
