@@ -68,7 +68,7 @@ button {
 
 .tooltip {
     visibility: hidden; /* Hide tooltip by default */
-    width: 120px; /* Width of the tooltip */
+    width: 220px; /* Width of the tooltip */
     background-color: #555; /* Background color of the tooltip */
     color: #fff; /* Text color */
     text-align: center; /* Center text */

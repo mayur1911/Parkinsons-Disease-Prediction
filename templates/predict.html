@@ -1,242 +1,289 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Parkinson's Disease Prediction</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
+
 <body>
     <div class="container">
         <h2>Parkinson's Disease Prediction</h2>
         <form action="/predict" method="POST" class="form-grid">
-            <div class="form-group">
-                <label>
-                    <span class="info-container">
-                        <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info" class="info-icon">
-                        <span class="tooltip">MDVP:Fo(Hz) description.</span>
-                    </span>
-                    MDVP:Fo(Hz):
-                    <input type="number" step="any" name="MDVP_Fo" placeholder="00.000" required>
-                </label>
+            <form action="/predict" method="POST" class="form-grid">
+                <div class="form-group">
+                    <label>
+                        <span class="info-container">
+                            <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info"
+                                class="info-icon">
+                            <span class="tooltip">Fundamental frequency of voice (MDVP:Fo) measured in Hertz
+                                (Hz).</span>
+                        </span>
+                        MDVP:Fo(Hz):
+                        <input type="number" step="any" name="MDVP_Fo" placeholder="00.000" required>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <span class="info-container">
+                            <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info"
+                                class="info-icon">
+                            <span class="tooltip">Maximum fundamental frequency (MDVP:Fhi) measured in Hertz
+                                (Hz).</span>
+                        </span>
+                        MDVP:Fhi(Hz):
+                        <input type="number" step="any" name="MDVP_Fhi" placeholder="00.000" required>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <span class="info-container">
+                            <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info"
+                                class="info-icon">
+                            <span class="tooltip">Minimum fundamental frequency (MDVP:Flo) measured in Hertz
+                                (Hz).</span>
+                        </span>
+                        MDVP:Flo(Hz):
+                        <input type="number" step="any" name="MDVP_Flo" placeholder="00.000" required>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <span class="info-container">
+                            <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info"
+                                class="info-icon">
+                            <span class="tooltip">MDVP:Jitter(%) is a measure of frequency variation as a
+                                percentage.</span>
+                        </span>
+                        MDVP:Jitter(%):
+                        <input type="number" step="any" name="MDVP_Jitter" placeholder="00.000" required>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <span class="info-container">
+                            <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info"
+                                class="info-icon">
+                            <span class="tooltip">MDVP:Jitter(Abs) is the absolute variation in frequency (Hz).</span>
+                        </span>
+                        MDVP:Jitter(Abs):
+                        <input type="number" step="any" name="MDVP_Jitter_Abs" placeholder="00.000" required>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <span class="info-container">
+                            <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info"
+                                class="info-icon">
+                            <span class="tooltip">MDVP:RAP is the Relative Average Perturbation, which measures
+                                short-term variability of pitch.</span>
+                        </span>
+                        MDVP:RAP:
+                        <input type="number" step="any" name="MDVP_RAP" placeholder="00.000" required>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <span class="info-container">
+                            <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info"
+                                class="info-icon">
+                            <span class="tooltip">MDVP:PPQ is the Pitch Perturbation Quotient, indicating vocal
+                                frequency variation.</span>
+                        </span>
+                        MDVP:PPQ:
+                        <input type="number" step="any" name="MDVP_PPQ" placeholder="00.000" required>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <span class="info-container">
+                            <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info"
+                                class="info-icon">
+                            <span class="tooltip">Jitter:DDP is the Degree of Depolarization for jitter, a voice quality
+                                measure.</span>
+                        </span>
+                        Jitter:DDP:
+                        <input type="number" step="any" name="Jitter_DDP" placeholder="00.000" required>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <span class="info-container">
+                            <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info"
+                                class="info-icon">
+                            <span class="tooltip">MDVP:Shimmer measures amplitude variation in voice signals.</span>
+                        </span>
+                        MDVP:Shimmer:
+                        <input type="number" step="any" name="MDVP_Shimmer" placeholder="00.000" required>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <span class="info-container">
+                            <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info"
+                                class="info-icon">
+                            <span class="tooltip">MDVP:Shimmer(dB) is the Shimmer in decibels, indicating vocal
+                                amplitude variation.</span>
+                        </span>
+                        MDVP:Shimmer(dB):
+                        <input type="number" step="any" name="MDVP_Shimmer_dB" placeholder="00.000" required>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <span class="info-container">
+                            <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info"
+                                class="info-icon">
+                            <span class="tooltip">Shimmer:APQ3 is the 3-point Amplitude Perturbation Quotient, measuring
+                                vocal stability.</span>
+                        </span>
+                        Shimmer:APQ3:
+                        <input type="number" step="any" name="Shimmer_APQ3" placeholder="00.000" required>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <span class="info-container">
+                            <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info"
+                                class="info-icon">
+                            <span class="tooltip">Shimmer:APQ5 is the 5-point Amplitude Perturbation Quotient for
+                                amplitude variation.</span>
+                        </span>
+                        Shimmer:APQ5:
+                        <input type="number" step="any" name="Shimmer_APQ5" placeholder="00.000" required>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <span class="info-container">
+                            <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info"
+                                class="info-icon">
+                            <span class="tooltip">MDVP:APQ is another Amplitude Perturbation Quotient used for analyzing
+                                shimmer.</span>
+                        </span>
+                        MDVP:APQ:
+                        <input type="number" step="any" name="MDVP_APQ" placeholder="00.000" required>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <span class="info-container">
+                            <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info"
+                                class="info-icon">
+                            <span class="tooltip">Shimmer:DDA is the average difference in amplitude for voice
+                                signals.</span>
+                        </span>
+                        Shimmer:DDA:
+                        <input type="number" step="any" name="Shimmer_DDA" placeholder="00.000" required>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <span class="info-container">
+                            <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info"
+                                class="info-icon">
+                            <span class="tooltip">NHR is the Noise to Harmonics Ratio, indicating breathiness or
+                                hoarseness in voice.</span>
+                        </span>
+                        NHR:
+                        <input type="number" step="any" name="NHR" placeholder="00.000" required>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <span class="info-container">
+                            <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info"
+                                class="info-icon">
+                            <span class="tooltip">HNR is the Harmonics to Noise Ratio, representing vocal
+                                quality.</span>
+                        </span>
+                        HNR:
+                        <input type="number" step="any" name="HNR" placeholder="00.000" required>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <span class="info-container">
+                            <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info"
+                                class="info-icon">
+                            <span class="tooltip">RPDE is Recurrence Period Density Entropy, which is used to measure
+                                voice signal complexity.</span>
+                        </span>
+                        RPDE:
+                        <input type="number" step="any" name="RPDE" placeholder="00.000" required>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <span class="info-container">
+                            <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info"
+                                class="info-icon">
+                            <span class="tooltip">DFA: Detrended Fluctuation Analysis, a method used to measure
+                                long-term correlations in time series data like voice signals.</span>
+                        </span>
+                        DFA:
+                        <input type="number" step="any" name="DFA" placeholder="00.000" required>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <span class="info-container">
+                            <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info"
+                                class="info-icon">
+                            <span class="tooltip">Spread1: Non-linear measure of fundamental frequency (pitch)
+                                variation, typically representing signal spread.</span>
+                        </span>
+                        spread1:
+                        <input type="number" step="any" name="spread1" placeholder="00.000" required>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <span class="info-container">
+                            <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info"
+                                class="info-icon">
+                            <span class="tooltip">Spread2: Another non-linear measure related to spread1, typically
+                                representing additional aspects of signal variability.</span>
+                        </span>
+                        spread2:
+                        <input type="number" step="any" name="spread2" placeholder="00.000" required>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <span class="info-container">
+                            <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info"
+                                class="info-icon">
+                            <span class="tooltip">D2: Correlation dimension, a measure used in voice analysis to
+                                quantify the complexity of voice signals.</span>
+                        </span>
+                        D2:
+                        <input type="number" step="any" name="D2" placeholder="00.000" required>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <span class="info-container">
+                            <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info"
+                                class="info-icon">
+                            <span class="tooltip">PPE: Pitch Period Entropy, a measure used to quantify the randomness
+                                in pitch variations in voice signals.</span>
+                        </span>
+                        PPE:
+                        <input type="number" step="any" name="PPE" placeholder="00.000" required>
+                    </label>
+                </div>
+
+                <button type="submit" class="submit-btn">Predict</button>
+            </form>
+            {% if prediction %}
+            <div class="result">
+                <h3>{{ prediction }}</h3>
             </div>
-            <div class="form-group">
-                <label>
-                    <span class="info-container">
-                        <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info" class="info-icon">
-                        <span class="tooltip">MDVP:Fhi(Hz) description.</span>
-                    </span>
-                    MDVP:Fhi(Hz):
-                    <input type="number" step="any" name="MDVP_Fhi" placeholder="00.000" required>
-                </label>
-            </div>
-            <div class="form-group">
-                <label>
-                    <span class="info-container">
-                        <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info" class="info-icon">
-                        <span class="tooltip">MDVP:Flo(Hz) description.</span>
-                    </span>
-                    MDVP:Flo(Hz):
-                    <input type="number" step="any" name="MDVP_Flo" placeholder="00.000" required>
-                </label>
-            </div>
-            <div class="form-group">
-                <label>
-                    <span class="info-container">
-                        <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info" class="info-icon">
-                        <span class="tooltip">MDVP:Jitter(%) description.</span>
-                    </span>
-                    MDVP:Jitter(%):
-                    <input type="number" step="any" name="MDVP_Jitter" placeholder="00.000" required>
-                </label>
-            </div>
-            <div class="form-group">
-                <label>
-                    <span class="info-container">
-                        <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info" class="info-icon">
-                        <span class="tooltip">MDVP:Jitter(Abs) description.</span>
-                    </span>
-                    MDVP:Jitter(Abs):
-                    <input type="number" step="any" name="MDVP_Jitter_Abs" placeholder="00.000" required>
-                </label>
-            </div>
-            <div class="form-group">
-                <label>
-                    <span class="info-container">
-                        <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info" class="info-icon">
-                        <span class="tooltip">MDVP:RAP description.</span>
-                    </span>
-                    MDVP:RAP:
-                    <input type="number" step="any" name="MDVP_RAP" placeholder="00.000" required>
-                </label>
-            </div>
-            <div class="form-group">
-                <label>
-                    <span class="info-container">
-                        <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info" class="info-icon">
-                        <span class="tooltip">MDVP:PPQ description.</span>
-                    </span>
-                    MDVP:PPQ:
-                    <input type="number" step="any" name="MDVP_PPQ" placeholder="00.000" required>
-                </label>
-            </div>
-            <div class="form-group">
-                <label>
-                    <span class="info-container">
-                        <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info" class="info-icon">
-                        <span class="tooltip">Jitter:DDP description.</span>
-                    </span>
-                    Jitter:DDP:
-                    <input type="number" step="any" name="Jitter_DDP" placeholder="00.000" required>
-                </label>
-            </div>
-            <div class="form-group">
-                <label>
-                    <span class="info-container">
-                        <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info" class="info-icon">
-                        <span class="tooltip">MDVP:Shimmer description.</span>
-                    </span>
-                    MDVP:Shimmer:
-                    <input type="number" step="any" name="MDVP_Shimmer" placeholder="00.000" required>
-                </label>
-            </div>
-            <div class="form-group">
-                <label>
-                    <span class="info-container">
-                        <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info" class="info-icon">
-                        <span class="tooltip">MDVP:Shimmer(dB) description.</span>
-                    </span>
-                    MDVP:Shimmer(dB):
-                    <input type="number" step="any" name="MDVP_Shimmer_dB" placeholder="00.000" required>
-                </label>
-            </div>
-            <div class="form-group">
-                <label>
-                    <span class="info-container">
-                        <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info" class="info-icon">
-                        <span class="tooltip">Shimmer:APQ3 description.</span>
-                    </span>
-                    Shimmer:APQ3:
-                    <input type="number" step="any" name="Shimmer_APQ3" placeholder="00.000" required>
-                </label>
-            </div>
-            <div class="form-group">
-                <label>
-                    <span class="info-container">
-                        <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info" class="info-icon">
-                        <span class="tooltip">Shimmer:APQ5 description.</span>
-                    </span>
-                    Shimmer:APQ5:
-                    <input type="number" step="any" name="Shimmer_APQ5" placeholder="00.000" required>
-                </label>
-            </div>
-            <div class="form-group">
-                <label>
-                    <span class="info-container">
-                        <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info" class="info-icon">
-                        <span class="tooltip">MDVP:APQ description.</span>
-                    </span>
-                    MDVP:APQ:
-                    <input type="number" step="any" name="MDVP_APQ" placeholder="00.000" required>
-                </label>
-            </div>
-            <div class="form-group">
-                <label>
-                    <span class="info-container">
-                        <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info" class="info-icon">
-                        <span class="tooltip">Shimmer:DDA description.</span>
-                    </span>
-                    Shimmer:DDA:
-                    <input type="number" step="any" name="Shimmer_DDA" placeholder="00.000" required>
-                </label>
-            </div>
-            <div class="form-group">
-                <label>
-                    <span class="info-container">
-                        <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info" class="info-icon">
-                        <span class="tooltip">NHR description.</span>
-                    </span>
-                    NHR:
-                    <input type="number" step="any" name="NHR" placeholder="00.000" required>
-                </label>
-            </div>
-            <div class="form-group">
-                <label>
-                    <span class="info-container">
-                        <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info" class="info-icon">
-                        <span class="tooltip">HNR description.</span>
-                    </span>
-                    HNR:
-                    <input type="number" step="any" name="HNR" placeholder="00.000" required>
-                </label>
-            </div>
-            <div class="form-group">
-                <label>
-                    <span class="info-container">
-                        <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info" class="info-icon">
-                        <span class="tooltip">RPDE description.</span>
-                    </span>
-                    RPDE:
-                    <input type="number" step="any" name="RPDE" placeholder="00.000" required>
-                </label>
-            </div>
-            <div class="form-group">
-                <label>
-                    <span class="info-container">
-                        <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info" class="info-icon">
-                        <span class="tooltip">DFA description.</span>
-                    </span>
-                    DFA:
-                    <input type="number" step="any" name="DFA" placeholder="00.000" required>
-                </label>
-            </div>
-            <div class="form-group">
-                <label>
-                    <span class="info-container">
-                        <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info" class="info-icon">
-                        <span class="tooltip">spread1 description.</span>
-                    </span>
-                    spread1:
-                    <input type="number" step="any" name="spread1" placeholder="00.000" required>
-                </label>
-            </div>
-            <div class="form-group">
-                <label>
-                    <span class="info-container">
-                        <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info" class="info-icon">
-                        <span class="tooltip">spread2 description.</span>
-                    </span>
-                    spread2:
-                    <input type="number" step="any" name="spread2" placeholder="00.000" required>
-                </label>
-            </div>
-            <div class="form-group">
-                <label>
-                    <span class="info-container">
-                        <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info" class="info-icon">
-                        <span class="tooltip">D2 description.</span>
-                    </span>
-                    D2:
-                    <input type="number" step="any" name="D2" placeholder="00.000" required>
-                </label>
-            </div>
-            <div class="form-group">
-                <label>
-                    <span class="info-container">
-                        <img src="{{ url_for('static', filename='assets/info-icon.png') }}" alt="Info" class="info-icon">
-                        <span class="tooltip">PPE description.</span>
-                    </span>
-                    PPE:
-                    <input type="number" step="any" name="PPE" placeholder="00.000" required>
-                </label>
-            </div>
-            <button type="submit" class="submit-btn">Predict</button>
-        </form>
-        {% if prediction %}
-        <div class="result">
-            <h3>{{ prediction }}</h3>
-        </div>
-        {% endif %}
+            {% endif %}
     </div>
 </body>
+
 </html>
