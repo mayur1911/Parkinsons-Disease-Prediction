@@ -87,3 +87,8 @@ button {
     visibility: visible; /* Show tooltip on hover */
     opacity: 1; /* Fade in */
 }
+.required-field {
+    color: red;
+    font-weight: bold;
+    margin-left: 3px;
+}
