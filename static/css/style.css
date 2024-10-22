@@ -92,3 +92,45 @@ button {
     font-weight: bold;
     margin-left: 3px;
 }
+/* Prefill button container styles */
+.prefill-buttons {
+    display: flex;
+    justify-content: center;  /* Center the buttons horizontally */
+    align-items: center;      /* Vertically align buttons */
+    margin-bottom: 20px;      /* Space between the Prefill buttons and Predict button */
+    width: 100%;              /* Make sure the container spans the full width */
+}
+
+/* Prefill button styles */
+.prefill-btn {
+    padding: 10px 20px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    color: white;
+    margin: 0 10px;           /* Add spacing between the buttons */
+}
+
+/* Prefill Positive Data button (red) */
+.prefill-btn:nth-child(1) {
+    background-color: red;
+}
+
+/* Prefill Negative Data button (green) */
+.prefill-btn:nth-child(2) {
+    background-color: green;
+}
+
+/* Predict button styles */
+.submit-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    display: block;
+    margin: 0 auto;  /* Center the Predict button */
+}

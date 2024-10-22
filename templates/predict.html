@@ -6,6 +6,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Parkinson's Disease Prediction</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+    <script>
+        function prefillPositiveData() {
+            const positiveData = [
+                119.99200, 157.30200, 74.99700, 0.00784, 0.00007, 0.00370, 0.00554, 0.01109,
+                0.04374, 0.42600, 0.02182, 0.03130, 0.02971, 0.06545, 0.02211, 21.03300,
+                0.414783, 0.815285, -4.813031, 0.266482, 2.301442, 0.284654
+            ];
+            fillForm(positiveData);
+            document.getElementById("result-section").style.display = "none";
+        }
+
+        function prefillNegativeData() {
+            const negativeData = [
+                197.07600, 206.89600, 192.05500, 0.00289, 0.00001, 0.00166, 0.00168, 0.00498,
+                0.01098, 0.09700, 0.00563, 0.00680, 0.00802, 0.01689, 0.00339, 26.77500,
+                0.422229, 0.741367, -7.348300, 0.177551, 1.743867, 0.085569
+            ];
+            fillForm(negativeData);
+            document.getElementById("result-section").style.display = "none";
+        }
+
+        function clearAllData() {
+            // Set all input fields to 0
+            const inputs = document.querySelectorAll('input[type="number"]');
+            inputs.forEach(input => {
+                input.value = "none"; // Set each input value to 0
+            });
+
+            // Hide the result section
+            document.getElementById("result-section").style.display = "none";
+        }
+
+
+        function fillForm(data) {
+            const fields = document.querySelectorAll('input[type="number"]');
+            fields.forEach((field, index) => {
+                field.value = data[index];
+            });
+        }
+    </script>
 </head>
 
 <body>
@@ -280,13 +320,21 @@
                 </label>
             </div>
 
+            <div class="form-group prefill-buttons">
+                <button type="button" class="prefill-btn" onclick="prefillPositiveData()">Prefill Positive Data</button>
+                <button type="button" class="prefill-btn" onclick="prefillNegativeData()">Prefill Negative Data</button>
+                <button type="button" class="prefill-btn" onclick="clearAllData()">Clear All Data</button>
+            </div>
+
             <button type="submit" class="submit-btn">Predict</button>
         </form>
+
         {% if prediction %}
-        <div class="result">
+        <div class="result" id="result-section">
             <h3>{{ prediction }}</h3>
         </div>
         {% endif %}
+
     </div>
 </body>
 
