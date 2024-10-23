@@ -1,15 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Parkinson's Disease Prediction</title>
-    <!-- <link rel="stylesheet" href="static/style.css">  Link to your CSS file if you have one -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parkinson's Disease Prediction</title>
+<style>
+        /* Basic styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+ 
+        h1 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            animation: fadeIn 2s ease-in-out;
+        }
+ 
+        /* Styling for button */
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+ 
+        button:hover {
+            background-color: #2980b9;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+ 
+        /* Adding subtle animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+ 
+        /* Responsive styling for mobile */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+ 
+            button {
+                font-size: 1rem;
+                padding: 10px 20px;
+            }
+        }
+</style>
 </head>
 <body>
-    <h1>Welcome to the Parkinson's Disease Prediction App</h1>
-    <a href="/predict">
-        <button>Click here to analysis</button>
-    </a>
+<h1>Welcome to the Parkinson's Disease Prediction App</h1>
+<a href="/predict">
+<button>Click here to analyze</button>
+</a>
 </body>
 </html>
