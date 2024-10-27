@@ -1,0 +1,46 @@
+<!-- base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Parkinson's Disease Prediction{% endblock %}</title>
+    <style>
+        /* Basic styling for the Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+        }
+
+        .home-button {
+            background-color: #2980b9;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .home-button:hover {
+            background-color: #21618c;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar with Home button -->
+    <div class="navbar">
+        <a href="{{ url_for('home') }}" class="home-button">Home</a>
+    </div>
+
+    <!-- Content Block for Other Pages -->
+    <div>
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>

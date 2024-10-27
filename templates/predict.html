@@ -49,6 +49,10 @@
 </head>
 
 <body>
+    {% extends "base.html" %}
+
+    {% block title %}Parkinson's Disease Prediction{% endblock %}
+    {% block content %}
     <div class="container">
         <h2>Parkinson's Disease Prediction</h2>
         <form action="/result" method="POST" class="form-grid">
@@ -336,6 +340,7 @@
         {% endif %}
 
     </div>
+    {% endblock %}
 </body>
 
 </html>
