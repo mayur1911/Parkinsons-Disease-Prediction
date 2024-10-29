@@ -1,149 +1,176 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 20px;
-    background-color: #f4f4f4;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+  background-color: #f4f4f4;
 }
 
 .container {
-    max-width: 800px;
-    margin: auto;
-    background: white;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: auto;
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
-    text-align: center;
+  text-align: center;
 }
 
 .form-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .form-group {
-    width: calc(50% - 20px); /* 50% for two columns with space */
-    margin-bottom: 15px;
+  width: calc(50% - 20px); /* 50% for two columns with space */
+  margin-bottom: 15px;
 }
 
 .form-group label {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .form-group input {
-    margin-left: 10px;
-    width: 100%;
+  margin-left: 10px;
+  width: 100%;
 }
 
 button {
-    width: 100%;
-    padding: 10px;
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .result {
-    margin-top: 20px;
-    font-size: 18px;
-    text-align: center;
+  margin-top: 20px;
+  font-size: 18px;
+  text-align: center;
 }
 .info-icon {
-    width: 16px; /* Adjust as needed */
-    height: 16px; /* Adjust as needed */
-    margin-right: 5px; /* Space between the icon and the text */
-    vertical-align: middle; /* Aligns the icon vertically with the text */
-    cursor: pointer;
+  width: 16px; /* Adjust as needed */
+  height: 16px; /* Adjust as needed */
+  margin-right: 5px; /* Space between the icon and the text */
+  vertical-align: middle; /* Aligns the icon vertically with the text */
+  cursor: pointer;
 }
 .info-container {
-    position: relative; /* Position relative for the tooltip */
-    display: inline-block; /* Allow the tooltip to be positioned */
+  position: relative; /* Position relative for the tooltip */
+  display: inline-block; /* Allow the tooltip to be positioned */
 }
 
 .tooltip {
-    visibility: hidden; /* Hide tooltip by default */
-    width: 220px; /* Width of the tooltip */
-    background-color: #555; /* Background color of the tooltip */
-    color: #fff; /* Text color */
-    text-align: center; /* Center text */
-    border-radius: 5px; /* Rounded corners */
-    padding: 5px; /* Padding */
-    position: absolute; /* Position tooltip */
-    z-index: 1; /* On top of other elements */
-    bottom: 125%; /* Position above the icon */
-    left: 50%; /* Center the tooltip */
-    margin-left: -60px; /* Adjust to center */
-    opacity: 0; /* Invisible by default */
-    transition: opacity 0.3s; /* Fade in effect */
+  visibility: hidden; /* Hide tooltip by default */
+  width: 220px; /* Width of the tooltip */
+  background-color: #555; /* Background color of the tooltip */
+  color: #fff; /* Text color */
+  text-align: center; /* Center text */
+  border-radius: 5px; /* Rounded corners */
+  padding: 5px; /* Padding */
+  position: absolute; /* Position tooltip */
+  z-index: 1; /* On top of other elements */
+  bottom: 125%; /* Position above the icon */
+  left: 50%; /* Center the tooltip */
+  margin-left: -60px; /* Adjust to center */
+  opacity: 0; /* Invisible by default */
+  transition: opacity 0.3s; /* Fade in effect */
 }
 
 .info-container:hover .tooltip {
-    visibility: visible; /* Show tooltip on hover */
-    opacity: 1; /* Fade in */
+  visibility: visible; /* Show tooltip on hover */
+  opacity: 1; /* Fade in */
 }
 .required-field {
-    color: red;
-    font-weight: bold;
-    margin-left: 3px;
+  color: red;
+  font-weight: bold;
+  margin-left: 3px;
 }
 /* Prefill button container styles */
 .prefill-buttons {
-    display: flex;
-    justify-content: center;  /* Center the buttons horizontally */
-    align-items: center;      /* Vertically align buttons */
-    margin-bottom: 20px;      /* Space between the Prefill buttons and Predict button */
-    width: 100%;              /* Make sure the container spans the full width */
+  display: flex;
+  justify-content: center; /* Center the buttons horizontally */
+  align-items: center; /* Vertically align buttons */
+  margin-bottom: 20px; /* Space between the Prefill buttons and Predict button */
+  width: 100%; /* Make sure the container spans the full width */
 }
 
 /* Prefill button styles */
 .prefill-btn {
-    padding: 10px 20px;
-    font-size: 14px;
-    border: none;
-    cursor: pointer;
-    border-radius: 4px;
-    color: white;
-    margin: 0 10px;           /* Add spacing between the buttons */
+  padding: 10px 20px;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  color: white;
+  margin: 0 10px; /* Add spacing between the buttons */
 }
 
 /* Prefill Positive Data button (red) */
 .prefill-btn:nth-child(1) {
-    background-color: red;
+  background-color: red;
 }
 
 /* Prefill Negative Data button (green) */
 .prefill-btn:nth-child(2) {
-    background-color: green;
+  background-color: green;
 }
 
 /* Predict button styles */
 .submit-btn {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #3498db;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 4px;
-    display: block;
-    margin: 0 auto; 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease; /* Center the Predict button */
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  display: block;
+  margin: 0 auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease; /* Center the Predict button */
 }
 
 .submit-btn:hover {
-    background-color: #2980b9;
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  background-color: #2980b9;
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
 .prefill-btn:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+
+/* Modal Styles */
+#accuracyModal {
+    display: none; /* Initially hidden */
+    position: absolute;
+    right: 10px; /* Adjust to your layout */
+    top: 60px; /* Adjust based on your needs */
+    border: 1px solid #ccc;
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    width: 300px;  /* Increase width */
+    height: auto;  /* Adjust height as needed */
+    border-radius: 8px; /* Optional: rounded corners */
+}
+
+/* Modal Close Button Styles */
+#modalCloseBtn {
+    background-color: #f44336; /* Default close button color */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-top: 10px; /* Optional: space above the button */
 }

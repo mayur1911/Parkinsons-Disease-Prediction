@@ -519,8 +519,12 @@
       </button>
     </div>
 
-    <button type="submit" class="submit-btn">Predict</button>
-  </form>
+    <button type="submit" onclick="showAccuracyPopup();" class="submit-btn">
+      Predict
+    </button>
+
+   
+    </form>
 
   {% if prediction %}
   <div class="result" id="result-section">
