@@ -5,6 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import check_password_hash
 from werkzeug.security import generate_password_hash
 import os
+from datetime import datetime 
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///hospital_admin.db'
@@ -20,6 +21,15 @@ class Admin(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(80), nullable=False)
+
+# Define the Patients model
+class Patient(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), nullable=False)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    password = db.Column(db.String(80), nullable=False)
+    date_of_birth = db.Column(db.Date, nullable=False)
 
 # Initialize database and add initial admin if it doesn’t exist
 def initialize_database():
@@ -57,6 +67,53 @@ def login():
 
     return render_template('login.html')
 
+# Route for patient registration
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'POST':
+        name = request.form['name']
+        username = request.form['username']
+        email = request.form['email']
+        password = request.form['password']
+        date_of_birth = request.form['date_of_birth']
+
+        # Check if the username or email already exists
+        if Patient.query.filter((Patient.username == username) | (Patient.email == email)).first():
+            flash('Username or Email already exists')
+            return redirect(url_for('register'))
+
+        # Hash the password before storing
+        hashed_password = generate_password_hash(password)
+
+        # Create a new patient record
+        new_patient = Patient(name=name, username=username, email=email,
+                              password=hashed_password, date_of_birth=datetime.strptime(date_of_birth, '%Y-%m-%d'))
+        db.session.add(new_patient)
+        db.session.commit()
+        flash('Registration successful! You can now log in.')
+        return redirect(url_for('login'))
+
+    return render_template('register.html')
+
+# Route for the registration page
+@app.route('/register')
+def show_registration():
+    return render_template('register.html')
+
+@app.route('/patient/login', methods=['GET', 'POST'])
+def patient_login():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        patient = Patient.query.filter_by(username=username).first()
+        if patient and check_password_hash(patient.password, password):
+            session['patient_id'] = patient.id
+            return redirect(url_for('predict'))
+        else:
+            flash('Invalid username or password')
+
+    return render_template('patient_login.html')
 
 # Route for the admin dashboard (prediction form)
 @app.route('/dashboard')
