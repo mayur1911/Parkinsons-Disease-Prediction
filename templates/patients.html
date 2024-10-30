@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/patients.css') }}">
+</head>
+<body>
+
+    <h2>Patients Information</h2>
+    <div style="text-align: center; margin-bottom: 20px;">
+        <button class="button" onclick="window.location.reload();">Refresh</button>
+        <input type="text" id="searchInput" placeholder="Search patients..." onkeyup="searchPatients()">
+    </div>
+    
+    {% if patients %}
+    <table id="patientsTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Date of Birth</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for patient in patients %}
+                <tr>
+                    <td>{{ patient.id }}</td>
+                    <td>{{ patient.name }}</td>
+                    <td>{{ patient.username }}</td>
+                    <td>{{ patient.email }}</td>
+                    <td>{{ patient.date_of_birth.strftime('%Y-%m-%d') }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p class="message">No patients registered in the system.</p>
+    {% endif %}
+    
+    <a href="{{ url_for('logout') }}" onclick="return confirm('Are you sure you want to log out?');">Logout</a>
+
+    <script>
+        // Function to search patients
+        function searchPatients() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const table = document.getElementById('patientsTable');
+            const rows = table.getElementsByTagName('tr');
+
+            for (let i = 1; i < rows.length; i++) { // Skip header row
+                const cells = rows[i].getElementsByTagName('td');
+                let rowVisible = false;
+                for (let j = 0; j < cells.length; j++) {
+                    if (cells[j]) {
+                        const cellValue = cells[j].textContent || cells[j].innerText;
+                        if (cellValue.toLowerCase().indexOf(input) > -1) {
+                            rowVisible = true;
+                        }
+                    }
+                }
+                rows[i].style.display = rowVisible ? '' : 'none';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -120,7 +120,12 @@ def patient_login():
 def dashboard():
     if 'admin_id' not in session:
         return redirect(url_for('login'))
-    return render_template('predict.html')
+    
+    # Fetch all patients from the database
+    all_patients = Patient.query.all()
+    
+    return render_template('patients.html', patients=all_patients)  # Pass patients to the template
+
 
 # Route for logging out the admin
 @app.route('/logout')
