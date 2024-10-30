@@ -35,7 +35,7 @@ class Patient(db.Model):
 # Define the Parameters model
 class Parameters(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    patient_id = db.Column(db.Integer, db.ForeignKey('patient.id'), nullable=False)
+    patient_id = db.Column(db.Integer, db.ForeignKey('patient.id'), nullable=False, unique=True)  # Ensure unique patient_id
     MDVP_Fo = db.Column(db.Float, nullable=False)
     MDVP_Fhi = db.Column(db.Float, nullable=False)
     MDVP_Flo = db.Column(db.Float, nullable=False)
@@ -216,46 +216,75 @@ def predict():
 
         # Predict the result
         prediction_result = loaded_model.predict(input_df)
-        prediction = "Parkinson's Disease Detected" if prediction_result[0] == 1 else "No Parkinson's Disease"
+        if prediction_result[0] == 1:
+            prediction = "Parkinson's Disease Detected"
+        else:
+            prediction = "No Parkinson's Disease"
 
         # Save parameters to the database
-        patient_id = session.get('patient_id')  # Ensure this is set somewhere in your app
-        if patient_id is None:
-            flash("Patient ID is not set in the session.")
-            return render_template('predict.html', prediction=prediction)
-
-        params = Parameters(patient_id=patient_id, 
-                            MDVP_Fo=features[0],
-                            MDVP_Fhi=features[1],
-                            MDVP_Flo=features[2],
-                            MDVP_Jitter=features[3],
-                            MDVP_Jitter_Abs=features[4],
-                            MDVP_RAP=features[5],
-                            MDVP_PPQ=features[6],
-                            Jitter_DDP=features[7],
-                            MDVP_Shimmer=features[8],
-                            MDVP_Shimmer_dB=features[9],
-                            Shimmer_APQ3=features[10],
-                            Shimmer_APQ5=features[11],
-                            MDVP_APQ=features[12],
-                            Shimmer_DDA=features[13],
-                            NHR=features[14],
-                            HNR=features[15],
-                            RPDE=features[16],
-                            DFA=features[17],
-                            spread1=features[18],
-                            spread2=features[19],
-                            D2=features[20],
-                            PPE=features[21])
+        patient_id = session.get('patient_id')  # Get the logged-in patient ID from the session
         
-        db.session.add(params)
-        db.session.commit()
-        logging.info(f"Parameters saved: {params}")
+        # Check if a record exists and update it or create a new one
+        params = Parameters.query.filter_by(patient_id=patient_id).first()  # Check if a record exists
+
+        if params:
+            # Update existing parameters
+            params.MDVP_Fo = features[0]
+            params.MDVP_Fhi = features[1]
+            params.MDVP_Flo = features[2]
+            params.MDVP_Jitter = features[3]
+            params.MDVP_Jitter_Abs = features[4]
+            params.MDVP_RAP = features[5]
+            params.MDVP_PPQ = features[6]
+            params.Jitter_DDP = features[7]
+            params.MDVP_Shimmer = features[8]
+            params.MDVP_Shimmer_dB = features[9]
+            params.Shimmer_APQ3 = features[10]
+            params.Shimmer_APQ5 = features[11]
+            params.MDVP_APQ = features[12]
+            params.Shimmer_DDA = features[13]
+            params.NHR = features[14]
+            params.HNR = features[15]
+            params.RPDE = features[16]
+            params.DFA = features[17]
+            params.spread1 = features[18]
+            params.spread2 = features[19]
+            params.D2 = features[20]
+            params.PPE = features[21]
+
+            db.session.commit()  # Commit the changes
+        else:
+            # Create new parameters record if it does not exist
+            new_params = Parameters(
+                patient_id=patient_id,
+                MDVP_Fo=features[0],
+                MDVP_Fhi=features[1],
+                MDVP_Flo=features[2],
+                MDVP_Jitter=features[3],
+                MDVP_Jitter_Abs=features[4],
+                MDVP_RAP=features[5],
+                MDVP_PPQ=features[6],
+                Jitter_DDP=features[7],
+                MDVP_Shimmer=features[8],
+                MDVP_Shimmer_dB=features[9],
+                Shimmer_APQ3=features[10],
+                Shimmer_APQ5=features[11],
+                MDVP_APQ=features[12],
+                Shimmer_DDA=features[13],
+                NHR=features[14],
+                HNR=features[15],
+                RPDE=features[16],
+                DFA=features[17],
+                spread1=features[18],
+                spread2=features[19],
+                D2=features[20],
+                PPE=features[21]
+            )
+            db.session.add(new_params)  # Add the new record
+            db.session.commit()  # Commit the changes
 
     except Exception as e:
-        db.session.rollback()  # Rollback if any error occurs
         flash(f"An error occurred during prediction: {e}")
-        logging.error(f"Error saving parameters: {e}")
 
     return render_template('predict.html', prediction=prediction)
 
