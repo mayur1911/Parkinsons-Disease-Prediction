@@ -6,6 +6,7 @@ from werkzeug.security import check_password_hash
 from werkzeug.security import generate_password_hash
 import os
 from datetime import datetime 
+import logging
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///hospital_admin.db'
@@ -30,6 +31,33 @@ class Patient(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), nullable=False)
     date_of_birth = db.Column(db.Date, nullable=False)
+
+# Define the Parameters model
+class Parameters(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    patient_id = db.Column(db.Integer, db.ForeignKey('patient.id'), nullable=False)
+    MDVP_Fo = db.Column(db.Float, nullable=False)
+    MDVP_Fhi = db.Column(db.Float, nullable=False)
+    MDVP_Flo = db.Column(db.Float, nullable=False)
+    MDVP_Jitter = db.Column(db.Float, nullable=False)
+    MDVP_Jitter_Abs = db.Column(db.Float, nullable=False)
+    MDVP_RAP = db.Column(db.Float, nullable=False)
+    MDVP_PPQ = db.Column(db.Float, nullable=False)
+    Jitter_DDP = db.Column(db.Float, nullable=False)
+    MDVP_Shimmer = db.Column(db.Float, nullable=False)
+    MDVP_Shimmer_dB = db.Column(db.Float, nullable=False)
+    Shimmer_APQ3 = db.Column(db.Float, nullable=False)
+    Shimmer_APQ5 = db.Column(db.Float, nullable=False)
+    MDVP_APQ = db.Column(db.Float, nullable=False)
+    Shimmer_DDA = db.Column(db.Float, nullable=False)
+    NHR = db.Column(db.Float, nullable=False)
+    HNR = db.Column(db.Float, nullable=False)
+    RPDE = db.Column(db.Float, nullable=False)
+    DFA = db.Column(db.Float, nullable=False)
+    spread1 = db.Column(db.Float, nullable=False)
+    spread2 = db.Column(db.Float, nullable=False)
+    D2 = db.Column(db.Float, nullable=False)
+    PPE = db.Column(db.Float, nullable=False)
 
 # Initialize database and add initial admin if it doesn’t exist
 def initialize_database():
@@ -126,7 +154,6 @@ def dashboard():
     
     return render_template('patients.html', patients=all_patients)  # Pass patients to the template
 
-
 # Route for logging out the admin
 @app.route('/logout')
 def logout():
@@ -134,13 +161,20 @@ def logout():
     return redirect(url_for('login'))
 
 # Route for the prediction form page
-@app.route('/predict', methods=['GET', 'POST'])
-def predict_form():
-    patient_id = request.args.get('patient_id')  # Get the patient ID from the URL
-    # Logic to fetch patient details if needed
-    return render_template('predict.html', patient_id=patient_id)
+# @app.route('/predict', methods=['GET', 'POST'])
+# def predict_form():
+#     patient_id = request.args.get('patient_id')  # Get the patient ID from the URL
+#     # Logic to fetch patient details if needed
+#     return render_template('predict.html', patient_id=patient_id)
 
-@app.route('/result', methods=['GET','POST'])
+@app.route('/predict_form')
+def predict_form():
+    patient_id = request.args.get('patient_id')
+    if patient_id:
+        session['patient_id'] = patient_id  # Save patient ID in session
+    return render_template('predict.html')  # Or your actual prediction form template
+
+@app.route('/result', methods=['GET', 'POST'])
 def predict():
     prediction = None
     try:
@@ -181,14 +215,48 @@ def predict():
         ])
 
         # Predict the result
-        prediction_result  = loaded_model.predict(input_df)
-        if prediction_result[0] == 1:
-            prediction = "Parkinson's Disease Detected"
-        else:
-            prediction = "No Parkinson's Disease"
+        prediction_result = loaded_model.predict(input_df)
+        prediction = "Parkinson's Disease Detected" if prediction_result[0] == 1 else "No Parkinson's Disease"
+
+        # Save parameters to the database
+        patient_id = session.get('patient_id')  # Ensure this is set somewhere in your app
+        if patient_id is None:
+            flash("Patient ID is not set in the session.")
+            return render_template('predict.html', prediction=prediction)
+
+        params = Parameters(patient_id=patient_id, 
+                            MDVP_Fo=features[0],
+                            MDVP_Fhi=features[1],
+                            MDVP_Flo=features[2],
+                            MDVP_Jitter=features[3],
+                            MDVP_Jitter_Abs=features[4],
+                            MDVP_RAP=features[5],
+                            MDVP_PPQ=features[6],
+                            Jitter_DDP=features[7],
+                            MDVP_Shimmer=features[8],
+                            MDVP_Shimmer_dB=features[9],
+                            Shimmer_APQ3=features[10],
+                            Shimmer_APQ5=features[11],
+                            MDVP_APQ=features[12],
+                            Shimmer_DDA=features[13],
+                            NHR=features[14],
+                            HNR=features[15],
+                            RPDE=features[16],
+                            DFA=features[17],
+                            spread1=features[18],
+                            spread2=features[19],
+                            D2=features[20],
+                            PPE=features[21])
+        
+        db.session.add(params)
+        db.session.commit()
+        logging.info(f"Parameters saved: {params}")
 
     except Exception as e:
-        prediction = f"Error: {str(e)}"
+        db.session.rollback()  # Rollback if any error occurs
+        flash(f"An error occurred during prediction: {e}")
+        logging.error(f"Error saving parameters: {e}")
+
     return render_template('predict.html', prediction=prediction)
 
 if __name__ == '__main__':
