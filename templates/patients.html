@@ -22,6 +22,7 @@
                 <th>Username</th>
                 <th>Email</th>
                 <th>Date of Birth</th>
+                <th>Actions</th> <!-- New column for actions -->
             </tr>
         </thead>
         <tbody>
@@ -32,6 +33,9 @@
                     <td>{{ patient.username }}</td>
                     <td>{{ patient.email }}</td>
                     <td>{{ patient.date_of_birth.strftime('%Y-%m-%d') }}</td>
+                    <td>
+                        <a href="{{ url_for('predict_form') }}?patient_id={{ patient.id }}" class="action-button">View</a> <!-- Updated to link to the predict form -->
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>

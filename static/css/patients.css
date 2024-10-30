@@ -72,6 +72,22 @@ a:hover {
     background-color: #0056b3;
 }
 
+/* Action button styling */
+.action-button {
+    background-color: #28a745; /* Green */
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Action button hover effect */
+.action-button:hover {
+    background-color: #218838; /* Darker green */
+}
+
 /* Message styling */
 .message {
     margin-top: 20px;
