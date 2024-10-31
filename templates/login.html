@@ -3,7 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <title>Admin Login</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/loginDashboard.css') }}">
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Body Styling */
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+        }
+
+        /* Form Styling */
+        form {
+            background: #fff;
+            padding: 2rem;
+            width: 320px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15);
+            text-align: center;
+        }
+
+        /* Heading */
+        h2 {
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            color: #4a4a4a;
+        }
+
+        /* Label */
+        label {
+            display: block;
+            text-align: left;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* Input Styling */
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 1.2rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            border-color: #6e8efb;
+        }
+
+        /* Button Styling */
+        button[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #6e8efb;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #575ed8;
+        }
+
+        /* Show Password Checkbox */
+        .show-password {
+            display: flex;
+            align-items: center;
+            justify-content: left;
+            margin-top: -10px;
+            margin-bottom: 1.2rem;
+            font-size: 0.9rem;
+        }
+
+        /* Flash Message Styling */
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 1rem;
+        }
+
+        li {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #f5c6cb;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
 <body>
     <form action="{{ url_for('login') }}" method="POST">
@@ -11,8 +118,16 @@
         <label>Username</label>
         <input type="text" name="username" required>
         <label>Password</label>
-        <input type="password" name="password" required>
+        <input type="password" id="password" name="password" required>
+        
+        <!-- Show Password Checkbox -->
+        <div class="show-password">
+            <input type="checkbox" id="show-password" onclick="togglePassword()">
+            <label for="show-password" style="margin-left: 5px;">Show Password</label>
+        </div>
+        
         <button type="submit">Login</button>
+        
         {% with messages = get_flashed_messages() %}
             {% if messages %}
                 <ul>
@@ -23,5 +138,17 @@
             {% endif %}
         {% endwith %}
     </form>
+
+    <!-- JavaScript to toggle password visibility -->
+    <script>
+        function togglePassword() {
+            const passwordField = document.getElementById("password");
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+            } else {
+                passwordField.type = "password";
+            }
+        }
+    </script>
 </body>
 </html>

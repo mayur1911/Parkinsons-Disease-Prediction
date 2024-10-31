@@ -160,13 +160,6 @@ def logout():
     session.pop('admin_id', None)
     return redirect(url_for('login'))
 
-# Route for the prediction form page
-# @app.route('/predict', methods=['GET', 'POST'])
-# def predict_form():
-#     patient_id = request.args.get('patient_id')  # Get the patient ID from the URL
-#     # Logic to fetch patient details if needed
-#     return render_template('predict.html', patient_id=patient_id)
-
 @app.route('/predict_form')
 def predict_form():
     patient_id = request.args.get('patient_id')
