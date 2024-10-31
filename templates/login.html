@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login</title>
     <style>
         /* Basic Reset */
@@ -102,40 +104,58 @@
         }
 
         li {
-            background-color: #f8d7da;
-            color: #721c24;
             padding: 10px;
             margin-top: 5px;
-            border: 1px solid #f5c6cb;
             border-radius: 4px;
             font-size: 0.9rem;
         }
+
+        .flash-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .flash-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            form {
+                width: 90%; /* Makes the form take more width on small screens */
+            }
+        }
     </style>
 </head>
+
 <body>
     <form action="{{ url_for('login') }}" method="POST">
         <h2>Admin Login</h2>
-        <label>Username</label>
-        <input type="text" name="username" required>
-        <label>Password</label>
-        <input type="password" id="password" name="password" required>
-        
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required aria-label="Username">
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required aria-label="Password">
+
         <!-- Show Password Checkbox -->
         <div class="show-password">
             <input type="checkbox" id="show-password" onclick="togglePassword()">
             <label for="show-password" style="margin-left: 5px;">Show Password</label>
         </div>
-        
+
         <button type="submit">Login</button>
-        
+
         {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                <ul>
-                    {% for message in messages %}
-                        <li>{{ message }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
+        {% if messages %}
+        <ul class="flashes">
+            {% for message in messages %}
+            <li class="{% if message.startswith('Error') %}flash-error{% else %}flash-success{% endif %}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
         {% endwith %}
     </form>
 
@@ -143,12 +163,9 @@
     <script>
         function togglePassword() {
             const passwordField = document.getElementById("password");
-            if (passwordField.type === "password") {
-                passwordField.type = "text";
-            } else {
-                passwordField.type = "password";
-            }
+            passwordField.type = (passwordField.type === "password") ? "text" : "password";
         }
     </script>
 </body>
+
 </html>

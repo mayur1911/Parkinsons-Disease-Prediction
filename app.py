@@ -34,6 +34,7 @@ class Patient(db.Model):
 class Parameters(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     patient_id = db.Column(db.Integer, db.ForeignKey('patient.id'), nullable=False, unique=True)
+    # Parameters fields
     MDVP_Fo = db.Column(db.Float, nullable=False)
     MDVP_Fhi = db.Column(db.Float, nullable=False)
     MDVP_Flo = db.Column(db.Float, nullable=False)
@@ -94,6 +95,7 @@ def login():
     return render_template('login.html')
 
 @app.route('/register', methods=['GET', 'POST'])
+@login_required  # Protect the register route
 def register():
     if request.method == 'POST':
         name = request.form['name']
@@ -149,7 +151,7 @@ def patient_login():
     return render_template('patient_login.html')
 
 @app.route('/dashboard')
-@login_required
+@login_required  # Protect the register route
 def dashboard():
     all_patients = Patient.query.all()
     return render_template('patients.html', patients=all_patients)
