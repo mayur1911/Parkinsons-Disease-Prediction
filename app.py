@@ -154,7 +154,7 @@ def patient_login():
 @login_required  # Protect the register route
 def dashboard():
     all_patients = Patient.query.all()
-    return render_template('patients.html', patients=all_patients)
+    return render_template('dashboard.html', patients=all_patients)
 
 @app.route('/logout')
 def logout():
@@ -163,8 +163,19 @@ def logout():
 
 @app.route('/predict_form')
 def predict_form():
-    session['patient_id'] = request.args.get('patient_id')
-    return render_template('predict.html')
+    # Get patient_id from query parameters
+    patient_id = request.args.get('patient_id')
+    
+    # Retrieve the record from the Parameters table
+    if patient_id:
+        parameter_record = Parameters.query.filter_by(patient_id=patient_id).first()
+        
+        if parameter_record:
+            # Pass the retrieved data to the template
+            return render_template('predict.html', parameter_record=parameter_record)
+    
+    # If no record found, render the template with a message
+    return render_template('predict.html', message="No data found for this patient.")
 
 @app.route('/result', methods=['POST'])
 def predict():
