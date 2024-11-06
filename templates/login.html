@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login</title>
+    <title>Login</title>
     <style>
         /* Basic Reset */
         * {
@@ -69,21 +69,48 @@
         }
 
         /* Button Styling */
-        button[type="submit"] {
+        .button {
             width: 100%;
             padding: 10px;
-            background-color: #6e8efb;
             border: none;
             border-radius: 4px;
             color: #fff;
             font-size: 1rem;
             font-weight: bold;
             cursor: pointer;
+            margin-bottom: 1rem;
             transition: background-color 0.3s ease;
         }
 
-        button[type="submit"]:hover {
+        .admin-login-btn {
+            background-color: #6e8efb;
+        }
+
+        .admin-login-btn:hover {
             background-color: #575ed8;
+        }
+
+        .patient-login-btn {
+            background-color: #f59542;
+        }
+
+        .patient-login-btn:hover {
+            background-color: #e08136;
+        }
+
+        /* Registration Link */
+        .registration-link {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .registration-link a {
+            color: #4a4a4a;
+            text-decoration: none;
+        }
+
+        .registration-link a:hover {
+            text-decoration: underline;
         }
 
         /* Show Password Checkbox */
@@ -125,7 +152,8 @@
         /* Responsive Design */
         @media (max-width: 480px) {
             form {
-                width: 90%; /* Makes the form take more width on small screens */
+                width: 90%;
+                /* Makes the form take more width on small screens */
             }
         }
     </style>
@@ -133,7 +161,7 @@
 
 <body>
     <form action="{{ url_for('login') }}" method="POST">
-        <h2>Admin Login</h2>
+        <h2>Login</h2>
         <label for="username">Username</label>
         <input type="text" id="username" name="username" required aria-label="Username">
 
@@ -146,7 +174,11 @@
             <label for="show-password" style="margin-left: 5px;">Show Password</label>
         </div>
 
-        <button type="submit">Login</button>
+        <!-- Admin Login Button -->
+        <button type="submit" class="button admin-login-btn">Admin Login</button>
+
+        <!-- Patient Login Button -->
+        <button type="button" class="button patient-login-btn" onclick="redirectToPatientLogin()">Patient Login</button>
 
         {% with messages = get_flashed_messages() %}
         {% if messages %}
@@ -157,6 +189,11 @@
         </ul>
         {% endif %}
         {% endwith %}
+
+        <!-- Patient Registration Link -->
+        <div class="registration-link">
+            <p>Not registered? <a href="{{ url_for('register') }}">Create an Account</a></p>
+        </div>
     </form>
 
     <!-- JavaScript to toggle password visibility -->
@@ -164,6 +201,31 @@
         function togglePassword() {
             const passwordField = document.getElementById("password");
             passwordField.type = (passwordField.type === "password") ? "text" : "password";
+        }
+
+        function redirectToPatientLogin() {
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            // Create a form to submit the data to patient_login
+            const form = document.createElement("form");
+            form.method = "POST";
+            form.action = "{{ url_for('patient_login') }}";
+
+            const usernameField = document.createElement("input");
+            usernameField.type = "hidden";
+            usernameField.name = "username";
+            usernameField.value = username;
+            form.appendChild(usernameField);
+
+            const passwordField = document.createElement("input");
+            passwordField.type = "hidden";
+            passwordField.name = "password";
+            passwordField.value = password;
+            form.appendChild(passwordField);
+
+            document.body.appendChild(form);
+            form.submit();
         }
     </script>
 </body>
