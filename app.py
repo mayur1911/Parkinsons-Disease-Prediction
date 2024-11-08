@@ -94,8 +94,21 @@ def login():
         flash('Invalid username or password')
     return render_template('login.html')
 
+@app.route('/patient_login', methods=['GET','POST'])
+def patient_login():
+    username = request.form.get('username')
+    password = request.form.get('password')
+
+    patient = Patient.query.filter_by(username=username).first()
+    if patient and check_password_hash(patient.password, password):
+        session['patient_id'] = patient.id  # Store patient session info
+        return redirect(url_for('predict_form', patient_id=patient.id)) # Redirect to 'predict.html' page
+    else:
+        flash('Invalid username or password', 'error')
+        return redirect(url_for('login'))  # Redirect back to login page if credentials are wrong
+
+
 @app.route('/register', methods=['GET', 'POST'])
-@login_required  # Protect the register route
 def register():
     if request.method == 'POST':
         name = request.form['name']
@@ -137,18 +150,6 @@ def register():
             flash('Error during registration. Please try again.')
 
     return render_template('register.html')
-
-@app.route('/patient/login', methods=['GET', 'POST'])
-def patient_login():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        patient = Patient.query.filter_by(username=username).first()
-        if patient and check_password_hash(patient.password, password):
-            session['patient_id'] = patient.id
-            return redirect(url_for('predict_form'))
-        flash('Invalid username or password')
-    return render_template('patient_login.html')
 
 @app.route('/dashboard')
 @login_required  # Protect the register route
