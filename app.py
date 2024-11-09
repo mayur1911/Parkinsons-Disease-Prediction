@@ -168,18 +168,17 @@ def predict_form():
     patient_id = request.args.get('patient_id')
     
     # Retrieve the record from the Parameters table
+    parameter_record = None
     if patient_id:
         parameter_record = Parameters.query.filter_by(patient_id=patient_id).first()
-        
-        if parameter_record:
-            # Pass the retrieved data to the template
-            return render_template('predict.html', parameter_record=parameter_record)
     
-    # If no record found, render the template with a message
-    return render_template('predict.html', message="No data found for this patient.")
+    # Pass `parameter_record` even if None, so Jinja2 does not throw an error
+    return render_template('predict.html', parameter_record=parameter_record)
+
 
 @app.route('/result', methods=['POST'])
 def predict():
+    prediction = ""
     try:
         features = [float(request.form.get(key, 0)) for key in [
             'MDVP_Fo', 'MDVP_Fhi', 'MDVP_Flo', 'MDVP_Jitter', 'MDVP_Jitter_Abs',
@@ -187,6 +186,7 @@ def predict():
             'Shimmer_APQ3', 'Shimmer_APQ5', 'MDVP_APQ', 'Shimmer_DDA', 'NHR', 'HNR',
             'RPDE', 'DFA', 'spread1', 'spread2', 'D2', 'PPE'
         ]]
+        
         input_df = pd.DataFrame([features], columns=[
             'MDVP:Fo(Hz)', 'MDVP:Fhi(Hz)', 'MDVP:Flo(Hz)',
             'MDVP:Jitter(%)', 'MDVP:Jitter(Abs)', 'MDVP:RAP',
@@ -195,12 +195,22 @@ def predict():
             'MDVP:APQ', 'Shimmer:DDA', 'NHR', 'HNR',
             'RPDE', 'DFA', 'spread1', 'spread2', 'D2', 'PPE'
         ])
+        
         prediction_result = loaded_model.predict(input_df)[0]
         prediction = "Parkinson's Disease Detected" if prediction_result == 1 else "No Parkinson's Disease"
+        
+        # Save or update parameters for the patient
         save_or_update_parameters(session.get('patient_id'), features)
+
+        # Retrieve the parameter record for rendering
+        parameter_record = Parameters.query.filter_by(patient_id=session.get('patient_id')).first()
+        
     except Exception as e:
         flash(f"An error occurred during prediction: {e}")
-    return render_template('predict.html', prediction=prediction)
+        parameter_record = None
+
+    return render_template('predict.html', prediction=prediction, parameter_record=parameter_record)
+
 
 def save_or_update_parameters(patient_id, features):
     param_record = Parameters.query.filter_by(patient_id=patient_id).first()

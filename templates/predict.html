@@ -53,7 +53,8 @@
       <h1>Parkinson's Disease Prediction</h1>
 
       <!-- Include form for input parameters -->
-      {% if parameter_record %} {% include "parameters.html" %} {% endif %}
+      {% if parameter_record or prediction %} {% include "parameters.html" %} {%
+      endif %}
 
       <!-- Result Section -->
       <div id="result-section" style="display: none">
