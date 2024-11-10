@@ -84,6 +84,17 @@ a:hover {
   transition: background-color 0.3s;
 }
 
+/* Action button styling */
+.delete-action-button {
+  background-color: #ff0707; /* Green */
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
 /* Action button hover effect */
 .action-button:hover {
   background-color: #218838; /* Darker green */

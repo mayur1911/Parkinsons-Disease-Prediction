@@ -7,6 +7,7 @@ import pandas as pd
 from datetime import datetime
 import os
 import logging
+from flask import jsonify, redirect
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///hospital_admin.db'
@@ -319,6 +320,18 @@ def save_or_update_parameters(patient_id, features):
         db.session.rollback()  # Rollback in case of error
         flash(f"Error while saving parameters: {e}")
 
+@app.route('/delete_patient/<int:patient_id>', methods=['DELETE'])
+def delete_patient(patient_id):
+    # Find the patient by ID
+    patient = Patient.query.get(patient_id)
+    
+    # If the patient exists, delete them
+    if patient:
+        db.session.delete(patient)  # This will also delete the associated Parameters due to cascade
+        db.session.commit()
+        return jsonify({'success': True, 'message': 'Patient deleted successfully'}), 200
+    else:
+        return jsonify({'success': False, 'message': 'Patient not found'}), 404
 
 
 if __name__ == '__main__':
