@@ -6,6 +6,7 @@ import joblib
 import pandas as pd
 from datetime import datetime
 import os
+import logging
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///hospital_admin.db'
@@ -168,25 +169,66 @@ def predict_form():
     patient_id = request.args.get('patient_id')
     
     # Retrieve the record from the Parameters table
-    parameter_record = None
-    if patient_id:
-        parameter_record = Parameters.query.filter_by(patient_id=patient_id).first()
+    parameter_record = Parameters.query.filter_by(patient_id=patient_id).first() if patient_id else None
     
-    # Pass `parameter_record` even if None, so Jinja2 does not throw an error
-    return render_template('predict.html', parameter_record=parameter_record)
+    # Define default values for each field
+    default_values = {
+        'MDVP_Fo': 0,
+        'MDVP_Fhi': 0,
+        'MDVP_Flo': 0,
+        'MDVP_Jitter': 0,
+        'MDVP_Jitter_Abs': 0,
+        'MDVP_RAP': 0,
+        'MDVP_PPQ': 0,
+        'Jitter_DDP': 0,
+        'MDVP_Shimmer': 0,
+        'MDVP_Shimmer_dB': 0,
+        'Shimmer_APQ3': 0,
+        'Shimmer_APQ5': 0,
+        'MDVP_APQ': 0,
+        'Shimmer_DDA': 0,
+        'NHR': 0,
+        'HNR': 0,
+        'RPDE': 0,
+        'DFA': 0,
+        'spread1': 0,
+        'spread2': 0,
+        'D2': 0,
+        'PPE': 0
+    }
+    
+    # If parameter_record is None, use default values
+    parameter_data = parameter_record.__dict__ if parameter_record else default_values
+    
+    return render_template('predict.html', parameter_record=parameter_data)
 
+
+# Set up basic logging for debugging
+logging.basicConfig(level=logging.DEBUG)
 
 @app.route('/result', methods=['POST'])
 def predict():
     prediction = ""
     try:
+        # Get patient_id from session
+        patient_id = session.get('patient_id')
+        
+        if not patient_id:
+            flash("No patient ID found in session. Please log in again.")
+            return redirect(url_for('your_login_or_patient_selection_route'))
+
+        # Collect features from the form
         features = [float(request.form.get(key, 0)) for key in [
             'MDVP_Fo', 'MDVP_Fhi', 'MDVP_Flo', 'MDVP_Jitter', 'MDVP_Jitter_Abs',
             'MDVP_RAP', 'MDVP_PPQ', 'Jitter_DDP', 'MDVP_Shimmer', 'MDVP_Shimmer_dB',
             'Shimmer_APQ3', 'Shimmer_APQ5', 'MDVP_APQ', 'Shimmer_DDA', 'NHR', 'HNR',
             'RPDE', 'DFA', 'spread1', 'spread2', 'D2', 'PPE'
         ]]
-        
+
+        # Log the features to verify
+        logging.debug(f"Features for prediction: {features}")
+
+        # Prepare input data for prediction
         input_df = pd.DataFrame([features], columns=[
             'MDVP:Fo(Hz)', 'MDVP:Fhi(Hz)', 'MDVP:Flo(Hz)',
             'MDVP:Jitter(%)', 'MDVP:Jitter(Abs)', 'MDVP:RAP',
@@ -196,31 +238,51 @@ def predict():
             'RPDE', 'DFA', 'spread1', 'spread2', 'D2', 'PPE'
         ])
         
+        # Get prediction result
         prediction_result = loaded_model.predict(input_df)[0]
         prediction = "Parkinson's Disease Detected" if prediction_result == 1 else "No Parkinson's Disease"
-        
-        # Save or update parameters for the patient
-        save_or_update_parameters(session.get('patient_id'), features)
 
-        # Retrieve the parameter record for rendering
-        parameter_record = Parameters.query.filter_by(patient_id=session.get('patient_id')).first()
+        # Save or update parameters
+        save_or_update_parameters(patient_id, features)
+        
+        # Retrieve parameter record to show in UI
+        parameter_record = Parameters.query.filter_by(patient_id=patient_id).first()
+        if parameter_record is None:
+            logging.warning(f"Parameter record for patient_id {patient_id} not found after save.")
         
     except Exception as e:
         flash(f"An error occurred during prediction: {e}")
         parameter_record = None
+        logging.error(f"Prediction error: {e}")
 
     return render_template('predict.html', prediction=prediction, parameter_record=parameter_record)
 
 
 def save_or_update_parameters(patient_id, features):
-    param_record = Parameters.query.filter_by(patient_id=patient_id).first()
-    if param_record:
-        for i, col in enumerate(Parameters.__table__.columns.keys()[2:]):
-            setattr(param_record, col, features[i])
-    else:
-        param_record = Parameters(patient_id=patient_id, **dict(zip(Parameters.__table__.columns.keys()[2:], features)))
-        db.session.add(param_record)
-    db.session.commit()
+    try:
+        # Find the existing parameter record for the patient
+        param_record = Parameters.query.filter_by(patient_id=patient_id).first()
+        
+        if param_record:
+            # If a record exists, update it
+            for i, col in enumerate(Parameters.__table__.columns.keys()[2:]):  # Skip first column, patient_id
+                logging.debug(f"Updating {col} with value {features[i]}")
+                setattr(param_record, col, features[i])
+        else:
+            # If no record exists, create a new one
+            param_record = Parameters(patient_id=patient_id, **dict(zip(Parameters.__table__.columns.keys()[2:], features)))
+            db.session.add(param_record)
+
+        # Commit the changes
+        db.session.flush()  # Ensures data is sent to DB without waiting for commit.
+        db.session.commit()
+        logging.debug("Parameters saved successfully.")
+        
+    except Exception as e:
+        logging.error(f"Error saving/updating parameters: {e}")
+        db.session.rollback()  # Rollback in case of error
+        flash(f"Error while saving parameters: {e}")
+
 
 if __name__ == '__main__':
     initialize_database()

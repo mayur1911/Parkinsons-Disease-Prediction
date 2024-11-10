@@ -1,66 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Parkinson's Disease Prediction</title>
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/style.css') }}"
-    />
-    <script>
-      function prefillPositiveData() {
-        const positiveData = [
-          119.992, 157.302, 74.997, 0.00784, 0.00007, 0.0037, 0.00554, 0.01109,
-          0.04374, 0.426, 0.02182, 0.0313, 0.02971, 0.06545, 0.02211, 21.033,
-          0.414783, 0.815285, -4.813031, 0.266482, 2.301442, 0.284654,
-        ];
-        fillForm(positiveData);
-        document.getElementById("result-section").style.display = "none";
-      }
 
-      function prefillNegativeData() {
-        const negativeData = [
-          197.076, 206.896, 192.055, 0.00289, 0.00001, 0.00166, 0.00168,
-          0.00498, 0.01098, 0.097, 0.00563, 0.0068, 0.00802, 0.01689, 0.00339,
-          26.775, 0.422229, 0.741367, -7.3483, 0.177551, 1.743867, 0.085569,
-        ];
-        fillForm(negativeData);
-        document.getElementById("result-section").style.display = "none";
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Parkinson's Disease Prediction</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <script>
+    function prefillPositiveData() {
+      const positiveData = [
+        119.992, 157.302, 74.997, 0.00784, 0.00007, 0.0037, 0.00554, 0.01109,
+        0.04374, 0.426, 0.02182, 0.0313, 0.02971, 0.06545, 0.02211, 21.033,
+        0.414783, 0.815285, -4.813031, 0.266482, 2.301442, 0.284654,
+      ];
+      fillForm(positiveData);
+      document.getElementById("result-section").style.display = "none";
+    }
 
-      function clearAllData() {
-        const inputs = document.querySelectorAll('input[type="number"]');
-        inputs.forEach((input) => {
-          input.value = "";
-        });
-        document.getElementById("result-section").style.display = "none";
-      }
+    function prefillNegativeData() {
+      const negativeData = [
+        197.076, 206.896, 192.055, 0.00289, 0.00001, 0.00166, 0.00168,
+        0.00498, 0.01098, 0.097, 0.00563, 0.0068, 0.00802, 0.01689, 0.00339,
+        26.775, 0.422229, 0.741367, -7.3483, 0.177551, 1.743867, 0.085569,
+      ];
+      fillForm(negativeData);
+      document.getElementById("result-section").style.display = "none";
+    }
 
-      function fillForm(data) {
-        const fields = document.querySelectorAll('input[type="number"]');
-        fields.forEach((field, index) => {
-          field.value = data[index];
-        });
-      }
-    </script>
-  </head>
+    function clearAllData() {
+      const inputs = document.querySelectorAll('input[type="number"]');
+      inputs.forEach((input) => {
+        input.value = "";
+      });
+      document.getElementById("result-section").style.display = "none";
+    }
 
-  <body>
-    {% extends "base.html" %} {% block title %}Parkinson's Disease Prediction{%
-    endblock %} {% block content %}
-    <div class="container">
-      <h1>Parkinson's Disease Prediction</h1>
+    function fillForm(data) {
+      const fields = document.querySelectorAll('input[type="number"]');
+      fields.forEach((field, index) => {
+        field.value = data[index];
+      });
+    }
+  </script>
+</head>
 
-      <!-- Include form for input parameters -->
-      {% if parameter_record or prediction %} {% include "parameters.html" %} {%
-      endif %}
+<body>
+  {% extends "base.html" %} {% block title %}Parkinson's Disease Prediction{%
+  endblock %} {% block content %}
+  <div class="container">
+    <h1>Parkinson's Disease Prediction</h1>
 
-      <!-- Result Section -->
-      <div id="result-section" style="display: none">
-        <p id="prediction-result"></p>
-      </div>
+    <!-- Include form for input parameters -->
+    {% if parameter_record or prediction %} {% include "parameters.html" %} {%
+    endif %}
+
+    <!-- Result Section -->
+    <div id="result-section" style="display: none">
+      <p id="prediction-result"></p>
     </div>
-    {% endblock %}
-  </body>
+  </div>
+  {% endblock %}
+</body>
 </html>
