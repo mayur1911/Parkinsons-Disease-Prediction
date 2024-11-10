@@ -1,0 +1,111 @@
+2024-11-10 18:34:16,768 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-11-10 18:34:16,769 - INFO - [33mPress CTRL+C to quit[0m
+2024-11-10 18:34:24,104 - INFO - 127.0.0.1 - - [10/Nov/2024 18:34:24] "GET / HTTP/1.1" 200 -
+2024-11-10 18:34:28,085 - INFO - 127.0.0.1 - - [10/Nov/2024 18:34:28] "[32mPOST /login HTTP/1.1[0m" 302 -
+2024-11-10 18:34:28,092 - INFO - 127.0.0.1 - - [10/Nov/2024 18:34:28] "GET /dashboard HTTP/1.1" 200 -
+2024-11-10 18:34:28,141 - INFO - 127.0.0.1 - - [10/Nov/2024 18:34:28] "[36mGET /static/css/patients.css HTTP/1.1[0m" 304 -
+2024-11-10 18:34:30,446 - INFO - 127.0.0.1 - - [10/Nov/2024 18:34:30] "GET /predict_form?patient_id=2 HTTP/1.1" 200 -
+2024-11-10 18:34:30,463 - INFO - 127.0.0.1 - - [10/Nov/2024 18:34:30] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2024-11-10 18:34:30,464 - INFO - 127.0.0.1 - - [10/Nov/2024 18:34:30] "[36mGET /static/assets/info-icon.png HTTP/1.1[0m" 304 -
+2024-11-10 18:34:46,911 - INFO - 127.0.0.1 - - [10/Nov/2024 18:34:46] "[32mPOST /result HTTP/1.1[0m" 302 -
+2024-11-10 18:34:46,917 - INFO - 127.0.0.1 - - [10/Nov/2024 18:34:46] "[32mGET /patient_login HTTP/1.1[0m" 302 -
+2024-11-10 18:34:46,922 - INFO - 127.0.0.1 - - [10/Nov/2024 18:34:46] "GET /login HTTP/1.1" 200 -
+2024-11-10 18:35:14,662 - INFO - 127.0.0.1 - - [10/Nov/2024 18:35:14] "[32mPOST /login HTTP/1.1[0m" 302 -
+2024-11-10 18:35:14,666 - INFO - 127.0.0.1 - - [10/Nov/2024 18:35:14] "GET /dashboard HTTP/1.1" 200 -
+2024-11-10 18:35:14,681 - INFO - 127.0.0.1 - - [10/Nov/2024 18:35:14] "[36mGET /static/css/patients.css HTTP/1.1[0m" 304 -
+2024-11-10 18:35:19,117 - INFO - 127.0.0.1 - - [10/Nov/2024 18:35:19] "[32mGET /logout HTTP/1.1[0m" 302 -
+2024-11-10 18:35:19,121 - INFO - 127.0.0.1 - - [10/Nov/2024 18:35:19] "GET /login HTTP/1.1" 200 -
+2024-11-10 18:35:22,684 - INFO - 127.0.0.1 - - [10/Nov/2024 18:35:22] "GET /register HTTP/1.1" 200 -
+2024-11-10 18:35:22,699 - INFO - 127.0.0.1 - - [10/Nov/2024 18:35:22] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2024-11-10 18:35:42,046 - INFO - 127.0.0.1 - - [10/Nov/2024 18:35:42] "[32mPOST /register HTTP/1.1[0m" 302 -
+2024-11-10 18:35:42,049 - INFO - 127.0.0.1 - - [10/Nov/2024 18:35:42] "[32mGET /dashboard HTTP/1.1[0m" 302 -
+2024-11-10 18:35:42,053 - INFO - 127.0.0.1 - - [10/Nov/2024 18:35:42] "GET /login HTTP/1.1" 200 -
+2024-11-10 18:35:47,337 - INFO - 127.0.0.1 - - [10/Nov/2024 18:35:47] "[32mPOST /patient_login HTTP/1.1[0m" 302 -
+2024-11-10 18:35:47,341 - INFO - 127.0.0.1 - - [10/Nov/2024 18:35:47] "GET /predict_form?patient_id=3 HTTP/1.1" 200 -
+2024-11-10 18:35:47,364 - INFO - 127.0.0.1 - - [10/Nov/2024 18:35:47] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2024-11-10 18:35:47,365 - INFO - 127.0.0.1 - - [10/Nov/2024 18:35:47] "[36mGET /static/assets/info-icon.png HTTP/1.1[0m" 304 -
+2024-11-10 18:36:12,755 - DEBUG - Incoming features: [6.0, 8768.0, 768.0, 576.0, 56.0, 456.0, 654.0, 65.0, 765.0, 875.0, 74.0, 5485.0, 454.0, 8654.0, 54.0, 64.0, 56.0, 56.0, 4654.0, 6546.0, 54.0, 546.0]
+2024-11-10 18:36:12,755 - DEBUG - Form data: ImmutableMultiDict([('MDVP_Fo', '6'), ('MDVP_Fhi', '8768'), ('MDVP_Flo', '768'), ('MDVP_Jitter', '576'), ('MDVP_Jitter_Abs', '56'), ('MDVP_RAP', '456'), ('MDVP_PPQ', '654'), ('Jitter_DDP', '65'), ('MDVP_Shimmer', '765'), ('MDVP_Shimmer_dB', '875'), ('Shimmer_APQ3', '74'), ('Shimmer_APQ5', '5485'), ('MDVP_APQ', '454'), ('Shimmer_DDA', '8654'), ('NHR', '54'), ('HNR', '64'), ('RPDE', '56'), ('DFA', '56'), ('spread1', '4654'), ('spread2', '6546'), ('D2', '54'), ('PPE', '546')])
+2024-11-10 18:36:12,781 - DEBUG - Prepared input DataFrame for prediction:    MDVP:Fo(Hz)  MDVP:Fhi(Hz)  MDVP:Flo(Hz)  MDVP:Jitter(%)  MDVP:Jitter(Abs)  MDVP:RAP  MDVP:PPQ  ...   HNR  RPDE   DFA  spread1  spread2    D2    PPE
+0          6.0        8768.0         768.0           576.0              56.0     456.0     654.0  ...  64.0  56.0  56.0   4654.0   6546.0  54.0  546.0
+
+[1 rows x 22 columns]
+2024-11-10 18:36:12,794 - DEBUG - Parameters saved successfully.
+2024-11-10 18:36:12,795 - INFO - 127.0.0.1 - - [10/Nov/2024 18:36:12] "POST /result HTTP/1.1" 200 -
+2024-11-10 18:36:12,818 - INFO - 127.0.0.1 - - [10/Nov/2024 18:36:12] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2024-11-10 18:36:12,820 - INFO - 127.0.0.1 - - [10/Nov/2024 18:36:12] "[36mGET /static/assets/info-icon.png HTTP/1.1[0m" 304 -
+2024-11-10 18:36:23,815 - INFO - 127.0.0.1 - - [10/Nov/2024 18:36:23] "GET / HTTP/1.1" 200 -
+2024-11-10 18:36:28,481 - INFO - 127.0.0.1 - - [10/Nov/2024 18:36:28] "[32mPOST /login HTTP/1.1[0m" 302 -
+2024-11-10 18:36:28,486 - INFO - 127.0.0.1 - - [10/Nov/2024 18:36:28] "GET /dashboard HTTP/1.1" 200 -
+2024-11-10 18:36:28,504 - INFO - 127.0.0.1 - - [10/Nov/2024 18:36:28] "[36mGET /static/css/patients.css HTTP/1.1[0m" 304 -
+2024-11-10 18:36:30,917 - INFO - 127.0.0.1 - - [10/Nov/2024 18:36:30] "GET /predict_form?patient_id=3 HTTP/1.1" 200 -
+2024-11-10 18:36:30,934 - INFO - 127.0.0.1 - - [10/Nov/2024 18:36:30] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2024-11-10 18:36:30,935 - INFO - 127.0.0.1 - - [10/Nov/2024 18:36:30] "[36mGET /static/assets/info-icon.png HTTP/1.1[0m" 304 -
+2024-11-10 18:36:32,916 - DEBUG - Incoming features: [197.076, 206.896, 192.055, 0.00289, 1e-05, 0.00166, 0.00168, 0.00498, 0.01098, 0.097, 0.00563, 0.0068, 0.00802, 0.01689, 0.00339, 26.775, 0.422229, 0.741367, -7.3483, 0.177551, 1.743867, 0.085569]
+2024-11-10 18:36:32,916 - DEBUG - Form data: ImmutableMultiDict([('MDVP_Fo', '197.076'), ('MDVP_Fhi', '206.896'), ('MDVP_Flo', '192.055'), ('MDVP_Jitter', '0.00289'), ('MDVP_Jitter_Abs', '0.00001'), ('MDVP_RAP', '0.00166'), ('MDVP_PPQ', '0.00168'), ('Jitter_DDP', '0.00498'), ('MDVP_Shimmer', '0.01098'), ('MDVP_Shimmer_dB', '0.097'), ('Shimmer_APQ3', '0.00563'), ('Shimmer_APQ5', '0.0068'), ('MDVP_APQ', '0.00802'), ('Shimmer_DDA', '0.01689'), ('NHR', '0.00339'), ('HNR', '26.775'), ('RPDE', '0.422229'), ('DFA', '0.741367'), ('spread1', '-7.3483'), ('spread2', '0.177551'), ('D2', '1.743867'), ('PPE', '0.085569')])
+2024-11-10 18:36:32,936 - DEBUG - Prepared input DataFrame for prediction:    MDVP:Fo(Hz)  MDVP:Fhi(Hz)  MDVP:Flo(Hz)  MDVP:Jitter(%)  MDVP:Jitter(Abs)  MDVP:RAP  ...      RPDE       DFA  spread1   spread2        D2       PPE
+0      197.076       206.896       192.055         0.00289           0.00001   0.00166  ...  0.422229  0.741367  -7.3483  0.177551  1.743867  0.085569
+
+[1 rows x 22 columns]
+2024-11-10 18:36:32,942 - DEBUG - Updating MDVP_Fo with value 197.076
+2024-11-10 18:36:32,942 - DEBUG - Updating MDVP_Fhi with value 206.896
+2024-11-10 18:36:32,942 - DEBUG - Updating MDVP_Flo with value 192.055
+2024-11-10 18:36:32,943 - DEBUG - Updating MDVP_Jitter with value 0.00289
+2024-11-10 18:36:32,943 - DEBUG - Updating MDVP_Jitter_Abs with value 1e-05
+2024-11-10 18:36:32,943 - DEBUG - Updating MDVP_RAP with value 0.00166
+2024-11-10 18:36:32,943 - DEBUG - Updating MDVP_PPQ with value 0.00168
+2024-11-10 18:36:32,943 - DEBUG - Updating Jitter_DDP with value 0.00498
+2024-11-10 18:36:32,944 - DEBUG - Updating MDVP_Shimmer with value 0.01098
+2024-11-10 18:36:32,944 - DEBUG - Updating MDVP_Shimmer_dB with value 0.097
+2024-11-10 18:36:32,944 - DEBUG - Updating Shimmer_APQ3 with value 0.00563
+2024-11-10 18:36:32,944 - DEBUG - Updating Shimmer_APQ5 with value 0.0068
+2024-11-10 18:36:32,944 - DEBUG - Updating MDVP_APQ with value 0.00802
+2024-11-10 18:36:32,944 - DEBUG - Updating Shimmer_DDA with value 0.01689
+2024-11-10 18:36:32,945 - DEBUG - Updating NHR with value 0.00339
+2024-11-10 18:36:32,945 - DEBUG - Updating HNR with value 26.775
+2024-11-10 18:36:32,945 - DEBUG - Updating RPDE with value 0.422229
+2024-11-10 18:36:32,945 - DEBUG - Updating DFA with value 0.741367
+2024-11-10 18:36:32,945 - DEBUG - Updating spread1 with value -7.3483
+2024-11-10 18:36:32,946 - DEBUG - Updating spread2 with value 0.177551
+2024-11-10 18:36:32,946 - DEBUG - Updating D2 with value 1.743867
+2024-11-10 18:36:32,946 - DEBUG - Updating PPE with value 0.085569
+2024-11-10 18:36:32,953 - DEBUG - Parameters saved successfully.
+2024-11-10 18:36:32,954 - INFO - 127.0.0.1 - - [10/Nov/2024 18:36:32] "POST /result HTTP/1.1" 200 -
+2024-11-10 18:36:32,978 - INFO - 127.0.0.1 - - [10/Nov/2024 18:36:32] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2024-11-10 18:36:32,981 - INFO - 127.0.0.1 - - [10/Nov/2024 18:36:32] "[36mGET /static/assets/info-icon.png HTTP/1.1[0m" 304 -
+2024-11-10 18:36:38,629 - DEBUG - Incoming features: [119.992, 157.302, 74.997, 0.00784, 7e-05, 0.0037, 0.00554, 0.01109, 0.04374, 0.426, 0.02182, 0.0313, 0.02971, 0.06545, 0.02211, 21.033, 0.414783, 0.815285, -4.813031, 0.266482, 2.301442, 0.284654]
+2024-11-10 18:36:38,630 - DEBUG - Form data: ImmutableMultiDict([('MDVP_Fo', '119.992'), ('MDVP_Fhi', '157.302'), ('MDVP_Flo', '74.997'), ('MDVP_Jitter', '0.00784'), ('MDVP_Jitter_Abs', '0.00007'), ('MDVP_RAP', '0.0037'), ('MDVP_PPQ', '0.00554'), ('Jitter_DDP', '0.01109'), ('MDVP_Shimmer', '0.04374'), ('MDVP_Shimmer_dB', '0.426'), ('Shimmer_APQ3', '0.02182'), ('Shimmer_APQ5', '0.0313'), ('MDVP_APQ', '0.02971'), ('Shimmer_DDA', '0.06545'), ('NHR', '0.02211'), ('HNR', '21.033'), ('RPDE', '0.414783'), ('DFA', '0.815285'), ('spread1', '-4.813031'), ('spread2', '0.266482'), ('D2', '2.301442'), ('PPE', '0.284654')])
+2024-11-10 18:36:38,648 - DEBUG - Prepared input DataFrame for prediction:    MDVP:Fo(Hz)  MDVP:Fhi(Hz)  MDVP:Flo(Hz)  MDVP:Jitter(%)  MDVP:Jitter(Abs)  MDVP:RAP  ...      RPDE       DFA   spread1   spread2        D2       PPE
+0      119.992       157.302        74.997         0.00784           0.00007    0.0037  ...  0.414783  0.815285 -4.813031  0.266482  2.301442  0.284654
+
+[1 rows x 22 columns]
+2024-11-10 18:36:38,659 - DEBUG - Updating MDVP_Fo with value 119.992
+2024-11-10 18:36:38,659 - DEBUG - Updating MDVP_Fhi with value 157.302
+2024-11-10 18:36:38,659 - DEBUG - Updating MDVP_Flo with value 74.997
+2024-11-10 18:36:38,659 - DEBUG - Updating MDVP_Jitter with value 0.00784
+2024-11-10 18:36:38,660 - DEBUG - Updating MDVP_Jitter_Abs with value 7e-05
+2024-11-10 18:36:38,660 - DEBUG - Updating MDVP_RAP with value 0.0037
+2024-11-10 18:36:38,660 - DEBUG - Updating MDVP_PPQ with value 0.00554
+2024-11-10 18:36:38,660 - DEBUG - Updating Jitter_DDP with value 0.01109
+2024-11-10 18:36:38,660 - DEBUG - Updating MDVP_Shimmer with value 0.04374
+2024-11-10 18:36:38,660 - DEBUG - Updating MDVP_Shimmer_dB with value 0.426
+2024-11-10 18:36:38,660 - DEBUG - Updating Shimmer_APQ3 with value 0.02182
+2024-11-10 18:36:38,661 - DEBUG - Updating Shimmer_APQ5 with value 0.0313
+2024-11-10 18:36:38,661 - DEBUG - Updating MDVP_APQ with value 0.02971
+2024-11-10 18:36:38,661 - DEBUG - Updating Shimmer_DDA with value 0.06545
+2024-11-10 18:36:38,661 - DEBUG - Updating NHR with value 0.02211
+2024-11-10 18:36:38,661 - DEBUG - Updating HNR with value 21.033
+2024-11-10 18:36:38,661 - DEBUG - Updating RPDE with value 0.414783
+2024-11-10 18:36:38,661 - DEBUG - Updating DFA with value 0.815285
+2024-11-10 18:36:38,662 - DEBUG - Updating spread1 with value -4.813031
+2024-11-10 18:36:38,662 - DEBUG - Updating spread2 with value 0.266482
+2024-11-10 18:36:38,662 - DEBUG - Updating D2 with value 2.301442
+2024-11-10 18:36:38,662 - DEBUG - Updating PPE with value 0.284654
+2024-11-10 18:36:38,664 - DEBUG - Parameters saved successfully.
+2024-11-10 18:36:38,665 - INFO - 127.0.0.1 - - [10/Nov/2024 18:36:38] "POST /result HTTP/1.1" 200 -
+2024-11-10 18:36:38,688 - INFO - 127.0.0.1 - - [10/Nov/2024 18:36:38] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2024-11-10 18:36:38,688 - INFO - 127.0.0.1 - - [10/Nov/2024 18:36:38] "[36mGET /static/assets/info-icon.png HTTP/1.1[0m" 304 -
+2024-11-10 18:36:45,344 - INFO - 127.0.0.1 - - [10/Nov/2024 18:36:45] "GET /predict_form?patient_id=3 HTTP/1.1" 200 -
+2024-11-10 18:36:45,364 - INFO - 127.0.0.1 - - [10/Nov/2024 18:36:45] "[36mGET /static/assets/info-icon.png HTTP/1.1[0m" 304 -
+2024-11-10 18:36:45,366 - INFO - 127.0.0.1 - - [10/Nov/2024 18:36:45] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -

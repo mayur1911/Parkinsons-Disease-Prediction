@@ -204,7 +204,14 @@ def predict_form():
 
 
 # Set up basic logging for debugging
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler("app.log"),  # Logs will be saved to this file
+        logging.StreamHandler()  # Also log to the console
+    ]
+)
 
 @app.route('/result', methods=['POST'])
 def predict():
@@ -215,34 +222,42 @@ def predict():
         
         if not patient_id:
             flash("No patient ID found in session. Please log in again.")
-            return redirect(url_for('your_login_or_patient_selection_route'))
+            return redirect(url_for('patient_login'))
 
         # Collect features from the form
-        features = [float(request.form.get(key, 0)) for key in [
+        feature_keys = [
             'MDVP_Fo', 'MDVP_Fhi', 'MDVP_Flo', 'MDVP_Jitter', 'MDVP_Jitter_Abs',
             'MDVP_RAP', 'MDVP_PPQ', 'Jitter_DDP', 'MDVP_Shimmer', 'MDVP_Shimmer_dB',
             'Shimmer_APQ3', 'Shimmer_APQ5', 'MDVP_APQ', 'Shimmer_DDA', 'NHR', 'HNR',
             'RPDE', 'DFA', 'spread1', 'spread2', 'D2', 'PPE'
-        ]]
+        ]
+        
+        # Collect features from the form and ensure the default is 0 if not found
+        features = [float(request.form.get(key, 0)) for key in feature_keys]
 
-        # Log the features to verify
-        logging.debug(f"Features for prediction: {features}")
+        # Log the incoming features to verify they are passed correctly
+        logging.debug(f"Incoming features: {features}")
+
+        # Log the form data to verify all submitted fields
+        logging.debug(f"Form data: {request.form}")
 
         # Prepare input data for prediction
         input_df = pd.DataFrame([features], columns=[
-            'MDVP:Fo(Hz)', 'MDVP:Fhi(Hz)', 'MDVP:Flo(Hz)',
-            'MDVP:Jitter(%)', 'MDVP:Jitter(Abs)', 'MDVP:RAP',
-            'MDVP:PPQ', 'Jitter:DDP', 'MDVP:Shimmer',
-            'MDVP:Shimmer(dB)', 'Shimmer:APQ3', 'Shimmer:APQ5',
-            'MDVP:APQ', 'Shimmer:DDA', 'NHR', 'HNR',
-            'RPDE', 'DFA', 'spread1', 'spread2', 'D2', 'PPE'
+            'MDVP:Fo(Hz)', 'MDVP:Fhi(Hz)', 'MDVP:Flo(Hz)', 'MDVP:Jitter(%)', 
+            'MDVP:Jitter(Abs)', 'MDVP:RAP', 'MDVP:PPQ', 'Jitter:DDP', 
+            'MDVP:Shimmer', 'MDVP:Shimmer(dB)', 'Shimmer:APQ3', 'Shimmer:APQ5',
+            'MDVP:APQ', 'Shimmer:DDA', 'NHR', 'HNR', 'RPDE', 'DFA', 'spread1',
+            'spread2', 'D2', 'PPE'
         ])
         
+        # Log the DataFrame used for prediction
+        logging.debug(f"Prepared input DataFrame for prediction: {input_df}")
+
         # Get prediction result
         prediction_result = loaded_model.predict(input_df)[0]
         prediction = "Parkinson's Disease Detected" if prediction_result == 1 else "No Parkinson's Disease"
 
-        # Save or update parameters
+        # Save or update parameters in the database
         save_or_update_parameters(patient_id, features)
         
         # Retrieve parameter record to show in UI
@@ -277,11 +292,12 @@ def save_or_update_parameters(patient_id, features):
         db.session.flush()  # Ensures data is sent to DB without waiting for commit.
         db.session.commit()
         logging.debug("Parameters saved successfully.")
-        
+
     except Exception as e:
         logging.error(f"Error saving/updating parameters: {e}")
         db.session.rollback()  # Rollback in case of error
         flash(f"Error while saving parameters: {e}")
+
 
 
 if __name__ == '__main__':
