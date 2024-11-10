@@ -168,10 +168,27 @@ def predict_form():
     # Get patient_id from query parameters
     patient_id = request.args.get('patient_id')
     
-    # Retrieve the record from the Parameters table
-    parameter_record = Parameters.query.filter_by(patient_id=patient_id).first() if patient_id else None
+    # If patient_id exists in query parameters, store it in session
+    if patient_id:
+        session['patient_id'] = patient_id
+        logging.debug(f"Patient ID {patient_id} set in session.")
+    else:
+        logging.warning("No patient ID provided in the request.")
+
+    # Log the current session patient_id
+    current_patient_id = session.get('patient_id')
+    logging.debug(f"Current patient ID in session: {current_patient_id}")
     
-    # Define default values for each field
+    # If there is no patient_id in the session, log and redirect
+    if not current_patient_id:
+        logging.error("No patient_id found in the session. Redirecting to dashboard.")
+        flash("No patient selected. Please select a patient.")
+        return redirect(url_for('dashboard'))  # Redirect to the patient selection page
+
+    # Retrieve the record from the Parameters table for the selected patient_id
+    parameter_record = Parameters.query.filter_by(patient_id=current_patient_id).first()
+    
+    # Define default values for each field if parameter_record is None
     default_values = {
         'MDVP_Fo': 0,
         'MDVP_Fhi': 0,
@@ -199,6 +216,7 @@ def predict_form():
     
     # If parameter_record is None, use default values
     parameter_data = parameter_record.__dict__ if parameter_record else default_values
+    logging.debug(f"Parameter data for patient_id {current_patient_id}: {parameter_data}")
     
     return render_template('predict.html', parameter_record=parameter_data)
 
@@ -219,7 +237,7 @@ def predict():
     try:
         # Get patient_id from session
         patient_id = session.get('patient_id')
-        
+        logging.debug(f"Patient ID retrieved from session: {patient_id}")
         if not patient_id:
             flash("No patient ID found in session. Please log in again.")
             return redirect(url_for('patient_login'))

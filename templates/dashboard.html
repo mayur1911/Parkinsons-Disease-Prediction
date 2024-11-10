@@ -35,7 +35,7 @@
                     <td>{{ patient.email }}</td>
                     <td>{{ patient.date_of_birth.strftime('%Y-%m-%d') }}</td>
                     <td>
-                        <a href="{{ url_for('predict_form') }}?patient_id={{ patient.id }}" class="action-button">View</a>
+                        <a href="{{ url_for('predict_form') }}?patient_id={{ patient.id }}" class="action-button" onclick="setPatientId({{ patient.id }})">View</a>
                     </td>
                 </tr>
             {% endfor %}
