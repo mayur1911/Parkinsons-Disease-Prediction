@@ -68,6 +68,9 @@ def initialize_database():
             db.session.commit()
             print("Database initialized with default admin.")
 
+# Ensure the database is initialized when the app starts
+initialize_database()
+
 # Decorator for login-required routes
 def login_required(f):
     @wraps(f)

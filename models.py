@@ -1,6 +1,8 @@
 from app import db
 from werkzeug.security import generate_password_hash
 
+db.create_all()
+
 class Admin(db.Model):
     __tablename__ = 'admins'
     id = db.Column(db.Integer, primary_key=True)
