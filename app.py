@@ -339,6 +339,10 @@ def delete_patient(patient_id):
     else:
         return jsonify({'success': False, 'message': 'Patient not found'}), 404
 
+@app.route('/logout_and_home')
+def logout_and_home():
+    session.clear()  # Clear all session data
+    return redirect(url_for('home'))  # Redirect to the home page
 
 if __name__ == '__main__':
     initialize_database()
