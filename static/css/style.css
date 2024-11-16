@@ -147,3 +147,23 @@ button {
     transform: translateY(-5px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
+/* Dashboard button styles */
+.dashboard-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #28a745; /* A green color to make it distinct */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.dashboard-btn:hover {
+    background-color: #218838; /* Darken on hover */
+    transform: translateY(-3px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}

@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% block title %}Patient Registration{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Patient Registration</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <style>
+      /* Your inline CSS here */
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h2>Patient Registration</h2>
+      <form method="POST">
+        <div class="form-group">
+          <label for="name">Name:</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            required
+            aria-label="Patient Name"
+          />
+        </div>
+        <div class="form-group">
+          <label for="username">Username:</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            required
+            aria-label="Username"
+          />
+        </div>
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            aria-label="Email Address"
+          />
+        </div>
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            required
+            aria-label="Password"
+          />
+        </div>
+        <div class="form-group">
+          <label for="date_of_birth">Date of Birth:</label>
+          <input
+            type="date"
+            id="date_of_birth"
+            name="date_of_birth"
+            required
+            aria-label="Date of Birth"
+          />
+        </div>
+        <button type="submit">Register</button>
+      </form>
+
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      <ul class="flashes">
+        {% for message in messages %}
+        <li
+          class="{% if message.startswith('Error') %}flash-error{% else %}flash-success{% endif %}"
+        >
+          {{ message }}
+        </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      {% endwith %}
+    </div>
+  </body>
+</html>
+{% endblock %}

@@ -28,3 +28,4 @@ pip-wheel-metadata/
 # MacOS and Windows files
 .DS_Store
 Thumbs.db
+app.log
