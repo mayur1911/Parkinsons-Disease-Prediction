@@ -71,14 +71,20 @@ def initialize_database():
 
 # Ensure the database is initialized when the app starts
 initialize_database()
+from functools import wraps
+from flask import flash, redirect, url_for, session
 
-# Decorator for login-required routes
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if 'admin_id' not in session:
-            flash("Please log in to access this page.")
+            # Only flash the message if it's not already in session
+            if 'message_shown' not in session:
+                flash("Please log in to access this page as ADMIN only.")
+                session['message_shown'] = True  # Mark message as shown
             return redirect(url_for('login'))
+        # Clear the message_shown flag upon successful login
+        session.pop('message_shown', None)
         return f(*args, **kwargs)
     return decorated_function
 

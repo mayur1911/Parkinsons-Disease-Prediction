@@ -1,233 +1,283 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
     <style>
-        /* Basic Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+      .flash-message {
+        padding: 10px;
+        background-color: #ffcccb;
+        color: #333;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        font-weight: bold;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
 
-        /* Body Styling */
-        body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            background: linear-gradient(135deg, #6e8efb, #a777e3);
-        }
+      /* Basic Reset */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
 
-        /* Form Styling */
+      /* Body Styling */
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #6e8efb, #a777e3);
+      }
+
+      /* Form Styling */
+      form {
+        background: #fff;
+        padding: 2rem;
+        width: 320px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15);
+        text-align: center;
+      }
+
+      /* Heading */
+      h2 {
+        margin-bottom: 1.5rem;
+        font-size: 1.5rem;
+        color: #4a4a4a;
+      }
+
+      /* Label */
+      label {
+        display: block;
+        text-align: left;
+        margin-bottom: 8px;
+        color: #333;
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+
+      /* Input Styling */
+      input[type="text"],
+      input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 1.2rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 1rem;
+        outline: none;
+        transition: border-color 0.3s ease;
+      }
+
+      input[type="text"]:focus,
+      input[type="password"]:focus {
+        border-color: #6e8efb;
+      }
+
+      /* Button Styling */
+      .button {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        color: #fff;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        margin-bottom: 1rem;
+        transition: background-color 0.3s ease;
+      }
+
+      .admin-login-btn {
+        background-color: #6e8efb;
+      }
+
+      .admin-login-btn:hover {
+        background-color: #575ed8;
+      }
+
+      .patient-login-btn {
+        background-color: #f59542;
+      }
+
+      .patient-login-btn:hover {
+        background-color: #e08136;
+      }
+
+      /* Registration Link */
+      .registration-link {
+        margin-top: 1rem;
+        font-size: 0.9rem;
+      }
+
+      .registration-link a {
+        color: #4a4a4a;
+        text-decoration: none;
+      }
+
+      .registration-link a:hover {
+        text-decoration: underline;
+      }
+
+      /* Show Password Checkbox */
+      .show-password {
+        display: flex;
+        align-items: center;
+        justify-content: left;
+        margin-top: -10px;
+        margin-bottom: 1.2rem;
+        font-size: 0.9rem;
+      }
+
+      /* Flash Message Styling */
+      ul {
+        list-style-type: none;
+        padding: 0;
+        margin-top: 1rem;
+      }
+
+      li {
+        padding: 10px;
+        margin-top: 5px;
+        border-radius: 4px;
+        font-size: 0.9rem;
+      }
+
+      .flash-error {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+      }
+
+      .flash-success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 480px) {
         form {
-            background: #fff;
-            padding: 2rem;
-            width: 320px;
-            border-radius: 8px;
-            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15);
-            text-align: center;
+          width: 90%;
+          /* Makes the form take more width on small screens */
         }
-
-        /* Heading */
-        h2 {
-            margin-bottom: 1.5rem;
-            font-size: 1.5rem;
-            color: #4a4a4a;
-        }
-
-        /* Label */
-        label {
-            display: block;
-            text-align: left;
-            margin-bottom: 8px;
-            color: #333;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        /* Input Styling */
-        input[type="text"],
-        input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 1.2rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.3s ease;
-        }
-
-        input[type="text"]:focus,
-        input[type="password"]:focus {
-            border-color: #6e8efb;
-        }
-
-        /* Button Styling */
-        .button {
-            width: 100%;
-            padding: 10px;
-            border: none;
-            border-radius: 4px;
-            color: #fff;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            margin-bottom: 1rem;
-            transition: background-color 0.3s ease;
-        }
-
-        .admin-login-btn {
-            background-color: #6e8efb;
-        }
-
-        .admin-login-btn:hover {
-            background-color: #575ed8;
-        }
-
-        .patient-login-btn {
-            background-color: #f59542;
-        }
-
-        .patient-login-btn:hover {
-            background-color: #e08136;
-        }
-
-        /* Registration Link */
-        .registration-link {
-            margin-top: 1rem;
-            font-size: 0.9rem;
-        }
-
-        .registration-link a {
-            color: #4a4a4a;
-            text-decoration: none;
-        }
-
-        .registration-link a:hover {
-            text-decoration: underline;
-        }
-
-        /* Show Password Checkbox */
-        .show-password {
-            display: flex;
-            align-items: center;
-            justify-content: left;
-            margin-top: -10px;
-            margin-bottom: 1.2rem;
-            font-size: 0.9rem;
-        }
-
-        /* Flash Message Styling */
-        ul {
-            list-style-type: none;
-            padding: 0;
-            margin-top: 1rem;
-        }
-
-        li {
-            padding: 10px;
-            margin-top: 5px;
-            border-radius: 4px;
-            font-size: 0.9rem;
-        }
-
-        .flash-error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-
-        .flash-success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 480px) {
-            form {
-                width: 90%;
-                /* Makes the form take more width on small screens */
-            }
-        }
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <form action="{{ url_for('login') }}" method="POST">
-        <h2>Login</h2>
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username" required aria-label="Username">
+      <h2>Login</h2>
+      <label for="username">Username</label>
+      <input
+        type="text"
+        id="username"
+        name="username"
+        required
+        aria-label="Username"
+      />
 
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" required aria-label="Password">
+      <label for="password">Password</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        required
+        aria-label="Password"
+      />
 
-        <!-- Show Password Checkbox -->
-        <div class="show-password">
-            <input type="checkbox" id="show-password" onclick="togglePassword()">
-            <label for="show-password" style="margin-left: 5px;">Show Password</label>
-        </div>
+      <!-- Show Password Checkbox -->
+      <div class="show-password">
+        <input type="checkbox" id="show-password" onclick="togglePassword()" />
+        <label for="show-password" style="margin-left: 5px"
+          >Show Password</label
+        >
+      </div>
 
-        <!-- Admin Login Button -->
-        <button type="submit" class="button admin-login-btn">Admin Login</button>
+      <!-- Admin Login Button -->
+      <button type="submit" class="button admin-login-btn">Admin Login</button>
 
-        <!-- Patient Login Button -->
-        <button type="button" class="button patient-login-btn" onclick="redirectToPatientLogin()">Patient Login</button>
+      <!-- Patient Login Button -->
+      <button
+        type="button"
+        class="button patient-login-btn"
+        onclick="redirectToPatientLogin()"
+      >
+        Patient Login
+      </button>
 
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        <ul class="flashes">
-            {% for message in messages %}
-            <li class="{% if message.startswith('Error') %}flash-error{% else %}flash-success{% endif %}">{{ message }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-        {% endwith %}
+      {% with messages = get_flashed_messages() %} {% if messages %}
+      <ul class="flashes">
+        {% for message in messages %}
+        <li
+          class="{% if message.startswith('Error') %}flash-error{% else %}flash-success{% endif %}"
+        >
+          {{ message }}
+        </li>
+        {% endfor %}
+      </ul>
+      {% endif %} {% endwith %}
 
-        <!-- Patient Registration Link -->
-        <div class="registration-link">
-            <p>Not registered? <a href="{{ url_for('register') }}">Create an Account</a></p>
-        </div>
+      <!-- Patient Registration Link -->
+      <div class="registration-link">
+        <p>
+          Not registered?
+          <a href="{{ url_for('register') }}">Create an Account</a>
+        </p>
+      </div>
+
+      {% with messages = get_flashed_messages() %} {% if messages %}
+      <div id="flash-messages">
+        {% for message in messages %}
+        <div class="flash-message">{{ message }}</div>
+        {% endfor %}
+      </div>
+      {% endif %} {% endwith %}
     </form>
 
     <!-- JavaScript to toggle password visibility -->
     <script>
-        function togglePassword() {
-            const passwordField = document.getElementById("password");
-            passwordField.type = (passwordField.type === "password") ? "text" : "password";
+      function togglePassword() {
+        const passwordField = document.getElementById("password");
+        passwordField.type =
+          passwordField.type === "password" ? "text" : "password";
+      }
+
+      function redirectToPatientLogin() {
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        // Create a form to submit the data to patient_login
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = "{{ url_for('patient_login') }}";
+
+        const usernameField = document.createElement("input");
+        usernameField.type = "hidden";
+        usernameField.name = "username";
+        usernameField.value = username;
+        form.appendChild(usernameField);
+
+        const passwordField = document.createElement("input");
+        passwordField.type = "hidden";
+        passwordField.name = "password";
+        passwordField.value = password;
+        form.appendChild(passwordField);
+
+        document.body.appendChild(form);
+        form.submit();
+      }
+
+      setTimeout(function () {
+        var flashMessages = document.getElementById("flash-messages");
+        if (flashMessages) {
+          flashMessages.style.display = "none";
         }
-
-        function redirectToPatientLogin() {
-            const username = document.getElementById("username").value;
-            const password = document.getElementById("password").value;
-
-            // Create a form to submit the data to patient_login
-            const form = document.createElement("form");
-            form.method = "POST";
-            form.action = "{{ url_for('patient_login') }}";
-
-            const usernameField = document.createElement("input");
-            usernameField.type = "hidden";
-            usernameField.name = "username";
-            usernameField.value = username;
-            form.appendChild(usernameField);
-
-            const passwordField = document.createElement("input");
-            passwordField.type = "hidden";
-            passwordField.name = "password";
-            passwordField.value = password;
-            form.appendChild(passwordField);
-
-            document.body.appendChild(form);
-            form.submit();
-        }
+      }, 3000); // Adjust the time as needed
     </script>
-</body>
-
+  </body>
 </html>
